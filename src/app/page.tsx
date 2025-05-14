@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
@@ -31,7 +30,7 @@ export default function Home() {
         <div className="bg-white shadow-md rounded-lg p-6">
           <h2 className="text-2xl font-bold mb-4 text-gray-800">About Me</h2>
           <p className="text-gray-600 mb-4">
-            I'm a quantitative trader and software engineer with expertise in algorithmic trading,
+            I&apos;m a quantitative trader and software engineer with expertise in algorithmic trading,
             financial modeling, and machine learning. With over 5 years of experience in developing
             trading systems, I specialize in futures and options markets.
           </p>

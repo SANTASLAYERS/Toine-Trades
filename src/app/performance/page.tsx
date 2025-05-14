@@ -19,10 +19,23 @@ const PerformancePage: NextPage = () => {
   // Get data from the JSON file
   const { equity_curve, metrics, trades } = performanceData;
 
+  // Define trade type
+  type Trade = {
+    [key: string]: string | number;
+    "Entry time": string;
+    "Exit time": string;
+    "Instrument": string;
+    "Market pos.": string;
+    "Qty": number;
+    "Entry price": number;
+    "Exit price": number;
+    "Profit": number;
+  };
+
   // Sort trades if needed
-  const sortedTrades = [...trades];
+  const sortedTrades = [...trades] as Trade[];
   if (sortField) {
-    sortedTrades.sort((a: any, b: any) => {
+    sortedTrades.sort((a: Trade, b: Trade) => {
       if (a[sortField] < b[sortField]) return sortDirection === "asc" ? -1 : 1;
       if (a[sortField] > b[sortField]) return sortDirection === "asc" ? 1 : -1;
       return 0;

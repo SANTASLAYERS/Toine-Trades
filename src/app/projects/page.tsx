@@ -44,9 +44,9 @@ export default function ProjectsPage() {
           <h2 className="text-2xl font-bold mb-4 text-white">System Architecture</h2>
           
           <p className="text-gray-300 mb-5 leading-relaxed">
-            This trading system implements a short-term mean reversion strategy targeting price dislocations in 
-            micro e-mini futures markets. The architecture prioritizes rapid signal generation, precise execution timing, 
-            and robust risk controls—all critical for capturing fleeting market inefficiencies that typically
+            This trading system implements a short-term mean reversion strategy targeting price dislocations in
+            micro e-mini futures markets. The architecture prioritizes rapid signal generation, precise execution timing,
+            and robust risk controls, all critical for capturing fleeting market inefficiencies that typically
             resolve within seconds to minutes.
           </p>
           
@@ -87,9 +87,15 @@ export default function ProjectsPage() {
               <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400 text-sm">🧠</span>
             </h3>
             <p className="text-gray-300 mb-4">
-              The system employs a dual-model approach, separating entry signal generation from exit timing 
+              The system employs a dual-model approach, separating entry signal generation from exit timing
               optimization to achieve greater specialization.
             </p>
+
+            <div className="bg-blue-900/30 p-4 rounded-lg border-l-4 border-blue-500 mb-5">
+              <h4 className="text-lg font-semibold text-blue-200 mb-2">Proprietary OBD (Order Book Dynamics) Engine</h4>
+              <p className="text-gray-300">
+                At the core of my trading system is a proprietary Order Book Dynamics engine I developed after analyzing millions of market microstructure patterns. This engine uses a unique mathematical approach to quantify orderbook imbalances and identify high-probability mean reversion setups before they become apparent in price action.</p>
+            </div>
             <ul className="list-disc pl-6 space-y-2 text-gray-300">
               <li><strong className="text-blue-200">Entry Model:</strong> Gradient-boosted classifier trained specifically on 
               high-confidence reversal patterns identified through historical analysis</li>

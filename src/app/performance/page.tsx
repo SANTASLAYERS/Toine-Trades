@@ -481,13 +481,13 @@ export default function PerformancePage() {
               <tbody>
                 {data.trades.slice(-5).reverse().map((trade, index) => (
                   <tr key={index} className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} transition-colors duration-200 hover:bg-blue-50`}>
-                    <td className="py-2 px-3 font-medium">{trade.Instrument}</td>
+                    <td className="py-2 px-3 font-medium text-gray-800">{trade.Instrument}</td>
                     <td className="py-2 px-3">
                       <span className={`inline-block px-2 py-1 rounded text-xs font-medium ${trade['Market pos.'] === 'Long' ? 'bg-green-100 text-green-800 hover:bg-green-200' : 'bg-red-100 text-red-800 hover:bg-red-200'} transition-colors duration-200`}>
                         {trade['Market pos.']}
                       </span>
                     </td>
-                    <td className="py-2 px-3">{trade.Qty}</td>
+                    <td className="py-2 px-3 text-gray-800">{trade.Qty}</td>
                     <td className={`py-2 px-3 font-medium ${trade.Profit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                       ${trade.Profit.toFixed(2)}
                     </td>
@@ -699,7 +699,7 @@ export default function PerformancePage() {
           This performance data reflects my systematic approach to trading futures markets, primarily NQ (Nasdaq) and MNQ (Micro Nasdaq) futures contracts.
         </p>
         <p className="text-blue-100 transition-all duration-300 hover:pl-2 hover:border-l-2 hover:border-blue-400 hover:bg-blue-800/50 rounded p-1">
-          The strategy employs technical analysis, volatility breakouts, and scalping techniques to identify high-probability trade setups across intraday timeframes.
+          My current system, a mean reversion algorithm for micro e-mini futures, has been trading live since April 2025. I have devoted over two years to rigorous research, development, and backtesting before deploying the strategy to live markets.
         </p>
         <div className="mt-4 pt-4 border-t border-blue-700 flex justify-between items-center">
           <span className="text-blue-200 text-sm">Last updated: May 14, 2025</span>

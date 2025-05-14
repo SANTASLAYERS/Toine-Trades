@@ -22,8 +22,8 @@ const nextConfig = {
   },
   // Set this to help with debugging 404s
   trailingSlash: false,
-  // Adding output configuration
-  output: 'standalone',
+  // Don't set output to export as it can break API routes
+  // output: 'standalone',
   // Ensure source maps are generated
   productionBrowserSourceMaps: true
 };

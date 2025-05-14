@@ -3,6 +3,10 @@
 // Explicitly set runtime to nodejs for CSV parsing
 export const runtime = 'nodejs';
 
+// Export with forced dynamic rendering to ensure fresh data
+// This prevents issues with static generation (output: 'export')
+export const dynamic = 'force-dynamic';
+
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import type { NextPage } from "next";

@@ -148,7 +148,7 @@ export default function Home() {
                   </div>
                   <div>
                     <dt className="text-sm font-medium text-blue-600 mb-1">Avg. Trade Duration</dt>
-                    <dd className="text-gray-800">2.2 minutes</dd>
+                    <dd className="text-gray-800">2 minutes</dd>
                   </div>
                   <div>
                     <dt className="text-sm font-medium text-blue-600 mb-1">Trade Frequency</dt>

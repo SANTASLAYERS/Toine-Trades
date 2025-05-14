@@ -1,30 +1,28 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
 
 export async function GET() {
   try {
-    // Find the NinjaTrader CSV file in the public/data directory
-    const publicDataDir = path.join(process.cwd(), 'public', 'data');
-    const files = fs.readdirSync(publicDataDir);
-    const csvFile = files.find(file => file.startsWith('NinjaTrader') && file.endsWith('.csv'));
+    // Fetch the CSV file from the public directory via its URL
+    // This works better on Vercel than using the file system
+    const response = await fetch(process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}/data/NinjaTrader-sample.csv` 
+      : 'http://localhost:3000/data/NinjaTrader-sample.csv');
 
-    if (!csvFile) {
-      return NextResponse.json({
-        success: false,
-        error: 'No NinjaTrader CSV file found in public/data directory'
+    if (!response.ok) {
+      return NextResponse.json({ 
+        success: false, 
+        error: 'No NinjaTrader CSV file found in public/data directory' 
       }, { status: 404 });
     }
-
-    // Read the CSV file content
-    const filePath = path.join(publicDataDir, csvFile);
-    const csvData = fs.readFileSync(filePath, 'utf-8');
+    
+    // Get the CSV data as text
+    const csvData = await response.text();
     
     // Return the CSV data
     return NextResponse.json({ 
       success: true, 
       csvData,
-      fileName: csvFile
+      fileName: 'NinjaTrader-sample.csv' // Hardcoded for simplicity
     });
   } catch (error) {
     console.error('Error reading CSV file:', error);

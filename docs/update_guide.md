@@ -15,8 +15,8 @@ This document outlines the process for updating trading performance data on the 
 2. Navigate to **Control Center** > **Trade Performance** > **Executions**
 3. Set desired date range for the export
 4. Click **Export** button (CSV format)
-5. Save the file with a name starting with "NinjaTrader" (e.g., `NinjaTrader Grid 2025-05-13.csv`)
-6. Move the file to the `public/data/` directory in your project
+5. Save the file and rename it exactly as `NinjaTrader-sample.csv`
+6. Move the file to the `public/data/` directory in your project, replacing the existing file
 
 ### 2. Push the CSV File to the Repository
 

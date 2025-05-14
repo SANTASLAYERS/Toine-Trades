@@ -114,8 +114,9 @@
    - Created dynamic sorting and filtering capabilities for trade data
 5. ✅ Made project Vercel-compatible:
    - Moved CSV files to `public/data/` for Vercel compatibility
-   - Updated API to read from the public directory instead of project root
-   - Created a sample CSV file for testing
+   - Updated API to use HTTP requests instead of file system access
+   - Created a fixed-name sample CSV file for reliable access
+   - Fixed potential NOT_FOUND errors on Vercel deployment
 5. ✅ Added TypeScript declarations for third-party libraries:
    - Created type declarations for `react-plotly.js`
    - Updated tsconfig.json to include custom type definitions

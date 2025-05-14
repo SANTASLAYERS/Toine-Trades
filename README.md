@@ -91,8 +91,8 @@ pnpm build
 The website displays performance data from real trading results. To update this data:
 
 1. Export trade data from NinjaTrader as CSV
-2. Save the file with a name starting with "NinjaTrader" (e.g., `NinjaTrader Grid 2025-05-13.csv`)
-3. Place the file in the `public/data/` directory of your project
+2. Save the file and rename it exactly as `NinjaTrader-sample.csv`
+3. Place the file in the `public/data/` directory, replacing the existing file
 4. Commit and push changes:
    ```bash
    git add "public/data/NinjaTrader*.csv"

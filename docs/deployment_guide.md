@@ -51,8 +51,9 @@ This document provides detailed instructions for deploying the trading algorithm
 
 1. **CSV File Requirement**
    - Make sure to include a NinjaTrader CSV file in the `public/data/` directory before deploying
-   - The filename must start with "NinjaTrader" (e.g., "NinjaTrader Grid 2025-05-13.csv")
-   - Using this directory ensures compatibility with Vercel's file system structure
+   - **Critical requirement:** The file must be named `NinjaTrader-sample.csv` exactly
+   - Using the public directory ensures the file can be accessed via URL in production
+   - The file is fetched via HTTP request rather than file system for Vercel compatibility
 
 2. **Environment Variables**
    - No special environment variables are required for this project

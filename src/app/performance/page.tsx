@@ -1,7 +1,8 @@
 'use client';
 
-// This is a fully client component, so we don't need runtime or dynamic exports
-// which can cause errors during static build
+// This tells Next.js that this page should be excluded from static generation
+// By returning an empty array, we're saying there are no static params for this page
+export const generateStaticParams = () => [];
 
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";

@@ -9,119 +9,169 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
   return (
-    <div className="prose lg:prose-xl max-w-none">
-      <h1 className="text-3xl font-bold mb-6">Algorithmic Trading System</h1>
+    <article className="prose lg:prose-xl max-w-none">
+      <header>
+        <h1 className="text-3xl font-bold mb-8">Mean Reversion Trading System</h1>
+      </header>
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Project Summary</h2>
-        <p>
-          A short-term mean reversion trading system targeting dislocations in micro e-mini futures. 
-          Over 90% of trades complete within 10 seconds to 5 minutes. The system uses separate ML models for 
-          entry and exit decisions and is deployed live via Heroku, with execution through NinjaTrader.
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold mb-4">System Architecture</h2>
+        
+        <p className="text-gray-700 mb-5 leading-relaxed">
+          This trading system implements a short-term mean reversion strategy targeting price dislocations in 
+          micro e-mini futures markets. The architecture prioritizes rapid signal generation, precise execution timing, 
+          and robust risk controls—all critical for capturing fleeting market inefficiencies that typically
+          resolve within seconds to minutes.
         </p>
+        
+        <blockquote className="border-l-4 border-gray-200 pl-4 italic text-gray-600 my-6">
+          Over 90% of trades complete within 10 seconds to 5 minutes, requiring a system architecture 
+          optimized for low-latency decision making and execution.
+        </blockquote>
       </section>
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">System Components</h2>
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold mb-4">Core Components</h2>
         
-        <div className="mb-6">
-          <h3 className="text-xl font-bold mb-2">Feature Pipeline</h3>
-          <ul className="list-disc pl-6 space-y-1">
-            <li><strong>Level-2 data:</strong> imbalance, spread volatility, depth imbalance</li>
-            <li><strong>Rolling stats:</strong> z-scores, local volatility, momentum shifts</li>
-            <li><strong>PCA-based compression</strong> of microstructure state windows</li>
+        <div className="mb-8">
+          <h3 className="text-xl font-bold mb-3">Feature Pipeline</h3>
+          <p className="text-gray-700 mb-4">
+            The feature pipeline ingests real-time market data, transforms it into predictive signals, 
+            and delivers these to the model stack with minimal latency.
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-gray-700">
+            <li><strong>Level-2 Data Processing:</strong> Real-time analysis of orderbook imbalance, 
+            spread volatility, and depth distribution patterns</li>
+            <li><strong>Statistical Feature Generation:</strong> Calculation of adaptive z-scores, 
+            rolling volatility metrics, and momentum oscillators calibrated to short timeframes</li>
+            <li><strong>Dimensional Reduction:</strong> PCA-based compression of order book state vectors 
+            to capture essential microstructure dynamics while reducing noise</li>
           </ul>
         </div>
         
-        <div className="mb-6">
-          <h3 className="text-xl font-bold mb-2">Model Stack</h3>
-          <ul className="list-disc pl-6 space-y-1">
-            <li><strong>Entry:</strong> XGBoost classifier on divergence signals</li>
-            <li><strong>Exit:</strong> Regression model minimizing
-              <div className="my-2 text-center italic">
-                Loss = (r<sub>t</sub>/σ<sub>t</sub>)<sup>2</sup> + λ·Δt
-              </div>
-              <div className="text-sm">where r<sub>t</sub> is realized return, σ<sub>t</sub> is local volatility, and Δt is trade duration</div>
+        <div className="mb-8">
+          <h3 className="text-xl font-bold mb-3">Model Architecture</h3>
+          <p className="text-gray-700 mb-4">
+            The system employs a dual-model approach, separating entry signal generation from exit timing 
+            optimization to achieve greater specialization.
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-gray-700">
+            <li><strong>Entry Model:</strong> Gradient-boosted classifier trained specifically on 
+            high-confidence reversal patterns identified through historical analysis</li>
+            <li><strong>Exit Model:</strong> Regression-based approach optimizing for risk-adjusted returns 
+            rather than absolute profit, using a custom loss function:
+            <div className="my-4 text-center font-mono">
+              Loss = (r<sub>t</sub>/σ<sub>t</sub>)<sup>2</sup> + λ·Δt
+            </div>
+            <div className="text-sm mb-2">
+              Where r<sub>t</sub> represents realized return, σ<sub>t</sub> is local volatility, 
+              and Δt is trade duration. This formulation balances profit capture against time exposure.
+            </div>
             </li>
-            <li><strong>Regime segmentation (optional):</strong> Gaussian HMM</li>
+            <li><strong>Market Regime Detection:</strong> Gaussian Hidden Markov Models identify latent
+            market states, allowing for dynamic parameter adjustments based on prevailing conditions</li>
           </ul>
         </div>
         
-        <div className="mb-6">
-          <h3 className="text-xl font-bold mb-2">Risk Management</h3>
-          <ul className="list-disc pl-6 space-y-1">
-            <li><strong>Position Sizing:</strong> Volatility-scaled position sizing</li>
-            <li><strong>Stop-Loss:</strong> Dynamic stop-loss based on intrabar volatility</li>
-            <li><strong>Drawdown Control:</strong> Equity curve-based drawdown throttle</li>
+        <div className="mb-8">
+          <h3 className="text-xl font-bold mb-3">Risk Management Framework</h3>
+          <p className="text-gray-700 mb-4">
+            The risk framework operates at multiple time scales, from trade-level stop placement 
+            to system-wide position sizing and drawdown controls.
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-gray-700">
+            <li><strong>Position Sizing:</strong> Dynamic allocation based on recent volatility measurements,
+            scaling exposure inversely with market turbulence</li>
+            <li><strong>Stop-Loss Mechanism:</strong> Adaptive stops calculated from intrabar volatility patterns 
+            and historical slippage distribution analysis</li>
+            <li><strong>System Throttling:</strong> Automated reduction in trade frequency and size 
+            during drawdown periods or degraded execution conditions</li>
           </ul>
         </div>
         
-        <div className="mb-6">
-          <h3 className="text-xl font-bold mb-2">Execution</h3>
-          <ul className="list-disc pl-6 space-y-1">
-            <li><strong>Server:</strong> Signal server on Heroku</li>
-            <li><strong>Order Bridge:</strong> Custom order bridge to NinjaTrader</li>
-            <li><strong>Execution:</strong> Cancel/replace handling to minimize slippage</li>
-          </ul>
-        </div>
-        
-        <div className="mb-6">
-          <h3 className="text-xl font-bold mb-2">Monitoring</h3>
-          <ul className="list-disc pl-6 space-y-1">
-            <li><strong>Logging:</strong> Logs output daily as JSON</li>
-            <li><strong>Analytics:</strong> QuantStats tear sheets and trade tables auto-updated</li>
+        <div className="mb-8">
+          <h3 className="text-xl font-bold mb-3">Execution Infrastructure</h3>
+          <p className="text-gray-700 mb-4">
+            The execution layer bridges the gap between signal generation and market interaction,
+            optimizing for minimal latency and slippage.
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-gray-700">
+            <li><strong>Signal Generation:</strong> Hosted on Heroku for reliable cloud compute with 
+            consistent performance characteristics</li>
+            <li><strong>Order Management:</strong> Custom interface layer connecting to NinjaTrader's API 
+            with comprehensive error handling and retry logic</li>
+            <li><strong>Execution Optimization:</strong> Latency-aware cancel/replace functionality with 
+            monitoring to identify and adapt to varying market conditions</li>
           </ul>
         </div>
       </section>
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Development Process</h2>
-        <ol className="list-decimal pl-6 space-y-2">
-          <li><strong>Hypothesis Generation:</strong> Formulate trading hypotheses based on market observations</li>
-          <li><strong>Feature Research:</strong> Design and test features to capture market inefficiencies</li>
-          <li><strong>Model Training:</strong> Cross-validated training with realistic assumptions</li>
-          <li><strong>Backtesting:</strong> Slippage-aware backtests across different market regimes</li>
-          <li><strong>Paper Trading:</strong> Validation in live markets without real capital</li>
-          <li><strong>Live Deployment:</strong> Gradual scaling of capital based on performance metrics</li>
-          <li><strong>Monitoring & Refinement:</strong> Continuous monitoring and model improvements</li>
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold mb-4">Development Methodology</h2>
+        <p className="text-gray-700 mb-5">
+          The development process follows a structured path from hypothesis formation to live deployment,
+          with each stage building confidence in the strategy's robustness.
+        </p>
+        <ol className="list-decimal pl-6 space-y-3 text-gray-700">
+          <li><strong>Hypothesis Formulation:</strong> Identification of potential market inefficiencies through 
+          statistical analysis and market microstructure research</li>
+          <li><strong>Feature Engineering:</strong> Development of signal generators capturing the identified 
+          inefficiencies with appropriate normalization and preprocessing</li>
+          <li><strong>Model Training and Validation:</strong> Walk-forward cross-validation with strict attention 
+          to preventing lookahead bias and overfitting</li>
+          <li><strong>Backtesting:</strong> Realistic simulation incorporating execution costs, slippage models, 
+          and adverse selection effects</li>
+          <li><strong>Paper Trading:</strong> Live market verification without capital deployment to measure 
+          performance against expectations</li>
+          <li><strong>Phased Deployment:</strong> Gradual scaling of capital allocation based on realized 
+          performance metrics and drawdown characteristics</li>
+          <li><strong>Continuous Monitoring:</strong> Ongoing assessment of strategy health, market regime shifts, 
+          and potential model drift</li>
         </ol>
       </section>
-      
-      <section className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Technologies Used</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold mb-4">Technical Implementation</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700">
           <div>
             <h3 className="text-lg font-semibold mb-2">Languages</h3>
-            <p className="text-gray-600">Python, SQL, C++, TypeScript</p>
+            <p>Python for data processing and modeling, C++ for latency-critical components, TypeScript for the monitoring dashboard</p>
           </div>
           <div>
-            <h3 className="text-lg font-semibold mb-2">ML/Modeling</h3>
-            <p className="text-gray-600">XGBoost, PyTorch, TensorFlow, scikit-learn, Optuna</p>
+            <h3 className="text-lg font-semibold mb-2">Machine Learning</h3>
+            <p>XGBoost for the primary models, with PyTorch for experimental neural approaches and Optuna for hyperparameter optimization</p>
           </div>
           <div>
-            <h3 className="text-lg font-semibold mb-2">Data</h3>
-            <p className="text-gray-600">Pandas, NumPy, Dask, Vaex</p>
+            <h3 className="text-lg font-semibold mb-2">Data Processing</h3>
+            <p>Pandas and NumPy for research, with Dask for distributed processing of historical datasets</p>
           </div>
           <div>
             <h3 className="text-lg font-semibold mb-2">Infrastructure</h3>
-            <p className="text-gray-600">Heroku, Docker, Git, REST APIs, FastAPI</p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold mb-2">Trading</h3>
-            <p className="text-gray-600">NinjaTrader, Polygon.io, IBKR API</p>
+            <p>Heroku for signal generation, Docker for containerization, FastAPI for internal service communication</p>
           </div>
         </div>
       </section>
 
-      <section className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Roadmap</h2>
-        <ul className="list-disc pl-6 space-y-1">
-          <li>Add support for crude oil and RTY futures</li>
-          <li>Train RL-based dynamic exit modules</li>
-          <li>Incorporate model retraining pipeline</li>
-          <li>Deploy regime filters to optimize model switching</li>
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold mb-4">System Roadmap</h2>
+        <p className="text-gray-700 mb-5">
+          Ongoing development focuses on extending market coverage, enhancing model sophistication,
+          and implementing additional automation for system maintenance.
+        </p>
+        <ul className="list-disc pl-6 space-y-2 text-gray-700">
+          <li><strong>Market Expansion:</strong> Extend strategy coverage to crude oil futures and Russell 2000 micro contracts</li>
+          <li><strong>Exit Optimization:</strong> Implement reinforcement learning approaches for dynamic exit decisions</li>
+          <li><strong>Model Maintenance:</strong> Develop automated retraining pipeline with drift detection</li>
+          <li><strong>Regime Awareness:</strong> Deploy more sophisticated regime classification to optimize strategy selection</li>
         </ul>
       </section>
-    </div>
+
+      <footer className="mt-12 pt-6 border-t border-gray-200">
+        <p className="text-gray-600 text-sm">
+          View system performance metrics on the{" "}
+          <a href="/performance" className="text-blue-600 hover:underline">Performance</a> page.
+        </p>
+      </footer>
+    </article>
   );
 }

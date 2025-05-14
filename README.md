@@ -1,36 +1,120 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Trading Algorithm Portfolio Website
 
-## Getting Started
+This is a portfolio website showcasing an algorithmic trading system built with Next.js, TypeScript, TailwindCSS, and Plotly.js. The site displays performance metrics from actual trading results, project architecture, and background information.
 
-First, run the development server:
+## Live Demo
+
+[Visit the live website](#) <!-- Replace with actual URL once deployed -->
+
+## Features
+
+- **Landing Page**: Bio, skills, and introduction to the trading approach
+- **Project Page**: Documentation of trading system architecture using MDX
+- **Performance Page**: Interactive equity curve and metrics using Plotly
+  - Total P&L
+  - Sharpe Ratio
+  - Maximum Drawdown
+  - Win Rate
+  - Expandable trade table (sortable)
+
+## Tech Stack
+
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Styling**: TailwindCSS
+- **Charts**: Plotly.js
+- **Content**: MDX for rich content
+- **Hosting**: Vercel (static deployment)
+
+## Local Development
+
+### Prerequisites
+
+- Node.js 18+
+- npm or pnpm
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/trading-portfolio.git
+cd trading-portfolio
+
+# Install dependencies
+npm install
+# or
+pnpm install
+```
+
+### Development Server
 
 ```bash
 npm run dev
 # or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+# or
+pnpm build
+```
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+├── src/
+│   ├── app/              # Next.js App Router
+│   │   ├── layout.tsx    # Shared layout with nav and footer
+│   │   ├── page.tsx      # Landing page
+│   │   ├── projects/     # Project page with system details
+│   │   └── performance/  # Performance metrics and charts
+│   ├── data/
+│   │   └── perf.json     # Performance data from NinjaTrader
+│   └── components/       # Reusable React components
+├── scripts/
+│   └── nt2json.py        # Converter for NinjaTrader CSV to JSON
+├── public/               # Static assets
+│   ├── favicon.svg
+│   └── arch.png          # Architecture diagram
+└── docs/                 # Documentation
+    ├── architecture.md
+    └── update_guide.md
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Data Updates
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The website displays performance data from real trading results. To update this data:
 
-## Deploy on Vercel
+1. Export trade data from NinjaTrader as CSV
+2. Run the conversion script:
+   ```bash
+   python scripts/nt2json.py nt_export.csv src/data/perf.json
+   ```
+3. Commit and push changes:
+   ```bash
+   git add src/data/perf.json
+   git commit -m "perf update $(date +%F)"
+   git push origin main
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+For detailed instructions, see [docs/update_guide.md](docs/update_guide.md).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment
+
+This project is configured for easy deployment on Vercel:
+
+```bash
+vercel login
+vercel --prod
+```
+
+For custom domains, configure them through the Vercel dashboard.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

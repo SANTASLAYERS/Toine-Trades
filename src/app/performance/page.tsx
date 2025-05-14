@@ -50,18 +50,62 @@ const PerformancePage: NextPage = () => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        
-        // Fetch CSV file in browser
-        const response = await fetch('/api/trading-data');
-        const data = await response.json();
-        
-        if (data.success) {
-          processTradeData(data.csvData);
-        } else {
-          console.error("Failed to load trading data:", data.error);
+
+        try {
+          // First try the API route
+          const response = await fetch('/api/trading-data');
+          const data = await response.json();
+
+          if (data.success) {
+            processTradeData(data.csvData);
+            return;
+          } else {
+            console.error("API route failed:", data.error);
+          }
+        } catch (apiError) {
+          console.error("API route error:", apiError);
         }
+
+        try {
+          // Fallback to direct fetch if API fails
+          const directResponse = await fetch('/data/NinjaTrader-sample.csv');
+          if (directResponse.ok) {
+            const csvData = await directResponse.text();
+            processTradeData(csvData);
+            return;
+          }
+        } catch (directError) {
+          console.error("Direct fetch error:", directError);
+        }
+
+        // If all else fails, use the data.json as last resort
+        try {
+          const jsonResponse = await fetch('/data/perf.json');
+          if (jsonResponse.ok) {
+            const jsonData = await jsonResponse.json();
+            // Process the data directly from JSON
+            setPerformanceData({
+              trades: jsonData.trades || [],
+              equityCurve: {
+                dates: jsonData.equity_curve?.dates || [],
+                values: jsonData.equity_curve?.values || [],
+              },
+              metrics: {
+                pnl: jsonData.metrics?.pnl || 0,
+                sharpe: jsonData.metrics?.sharpe || 0,
+                maxDrawdown: jsonData.metrics?.max_dd || 0,
+                winRate: jsonData.metrics?.win_rate || 0,
+              }
+            });
+            return;
+          }
+        } catch (jsonError) {
+          console.error("JSON fallback error:", jsonError);
+        }
+
+        console.error("Failed to load trading data from all sources");
       } catch (error) {
-        console.error("Error loading trading data:", error);
+        console.error("Error in data fetching:", error);
       } finally {
         setIsLoading(false);
       }

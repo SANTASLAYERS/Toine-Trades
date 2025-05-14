@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,128 +11,113 @@ export default function ProjectsPage() {
       <h1 className="text-3xl font-bold mb-6">Algorithmic Trading System</h1>
 
       <section className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Project Overview</h2>
+        <h2 className="text-2xl font-bold mb-4">Project Summary</h2>
         <p>
-          This project is a comprehensive algorithmic trading system designed to identify and exploit 
-          market inefficiencies in futures markets. The system combines statistical analysis, machine learning, 
-          and robust risk management to generate consistent returns while minimizing drawdowns.
+          A short-term mean reversion trading system targeting dislocations in micro e-mini futures. 
+          Over 90% of trades complete within 10 seconds to 5 minutes. The system uses separate ML models for 
+          entry and exit decisions and is deployed live via Heroku, with execution through NinjaTrader.
         </p>
-        <p>
-          The trading algorithm currently focuses on the micro e-mini futures markets (MNQ, MES, etc.) 
-          with a medium-frequency trading approach, executing approximately 5-15 trades per day.
-        </p>
-      </section>
-
-      <section className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Architecture</h2>
-        <div className="w-full mb-6 bg-gray-100 p-4 rounded-lg flex justify-center">
-          <Image 
-            src="/arch.png" 
-            alt="Trading System Architecture" 
-            width={800} 
-            height={400}
-            className="max-w-full h-auto"
-          />
-        </div>
       </section>
 
       <section className="mb-8">
         <h2 className="text-2xl font-bold mb-4">System Components</h2>
         
         <div className="mb-6">
-          <h3 className="text-xl font-bold mb-2">1. Data Pipeline</h3>
+          <h3 className="text-xl font-bold mb-2">Feature Pipeline</h3>
           <ul className="list-disc pl-6 space-y-1">
-            <li><strong>Market Data Feeds:</strong> Direct connections to market data providers offering low-latency price feeds.</li>
-            <li><strong>Feature Engineering:</strong> Custom technical indicators and statistical features derived from raw market data.</li>
-            <li><strong>Normalization Engine:</strong> Real-time normalization of features to ensure consistent model inputs regardless of market conditions.</li>
+            <li><strong>Level-2 data:</strong> imbalance, spread volatility, depth imbalance</li>
+            <li><strong>Rolling stats:</strong> z-scores, local volatility, momentum shifts</li>
+            <li><strong>PCA-based compression</strong> of microstructure state windows</li>
           </ul>
         </div>
         
         <div className="mb-6">
-          <h3 className="text-xl font-bold mb-2">2. Model Stack</h3>
+          <h3 className="text-xl font-bold mb-2">Model Stack</h3>
           <ul className="list-disc pl-6 space-y-1">
-            <li><strong>Primary Alpha Model:</strong> Ensemble of gradient-boosted decision trees and neural networks for price movement prediction.</li>
-            <li><strong>Regime Detection:</strong> Hidden Markov Models to identify different market regimes and adjust strategy parameters.</li>
-            <li><strong>Entry/Exit Optimization:</strong> Reinforcement learning models to optimize trade timing and execution.</li>
+            <li><strong>Entry:</strong> XGBoost classifier on divergence signals</li>
+            <li><strong>Exit:</strong> Regression model minimizing
+              <div className="my-2 text-center italic">
+                Loss = (r<sub>t</sub>/σ<sub>t</sub>)<sup>2</sup> + λ·Δt
+              </div>
+              <div className="text-sm">where r<sub>t</sub> is realized return, σ<sub>t</sub> is local volatility, and Δt is trade duration</div>
+            </li>
+            <li><strong>Regime segmentation (optional):</strong> Gaussian HMM</li>
           </ul>
         </div>
         
         <div className="mb-6">
-          <h3 className="text-xl font-bold mb-2">3. Risk Management</h3>
+          <h3 className="text-xl font-bold mb-2">Risk Management</h3>
           <ul className="list-disc pl-6 space-y-1">
-            <li><strong>Position Sizing:</strong> Dynamic position sizing based on market volatility and model confidence.</li>
-            <li><strong>Stop Loss System:</strong> Adaptive stop-loss mechanisms with volatility-based adjustments.</li>
-            <li><strong>Drawdown Controls:</strong> Automatic trading reduction during underperformance periods.</li>
-            <li><strong>Correlation Engine:</strong> Monitors correlation between strategies to maintain portfolio diversity.</li>
+            <li><strong>Position Sizing:</strong> Volatility-scaled position sizing</li>
+            <li><strong>Stop-Loss:</strong> Dynamic stop-loss based on intrabar volatility</li>
+            <li><strong>Drawdown Control:</strong> Equity curve-based drawdown throttle</li>
           </ul>
         </div>
         
         <div className="mb-6">
-          <h3 className="text-xl font-bold mb-2">4. Execution Layer</h3>
+          <h3 className="text-xl font-bold mb-2">Execution</h3>
           <ul className="list-disc pl-6 space-y-1">
-            <li><strong>Order Management:</strong> Custom order management system interfacing with NinjaTrader.</li>
-            <li><strong>Execution Algorithms:</strong> Smart order routing and execution to minimize slippage.</li>
-            <li><strong>Latency Optimization:</strong> Advanced techniques to minimize execution delays.</li>
+            <li><strong>Server:</strong> Signal server on Heroku</li>
+            <li><strong>Order Bridge:</strong> Custom order bridge to NinjaTrader</li>
+            <li><strong>Execution:</strong> Cancel/replace handling to minimize slippage</li>
           </ul>
         </div>
         
         <div className="mb-6">
-          <h3 className="text-xl font-bold mb-2">5. Performance Analytics</h3>
+          <h3 className="text-xl font-bold mb-2">Monitoring</h3>
           <ul className="list-disc pl-6 space-y-1">
-            <li><strong>Real-time Dashboard:</strong> Live monitoring of strategy performance and risk metrics.</li>
-            <li><strong>Post-trade Analysis:</strong> Detailed analysis of executed trades to identify improvement opportunities.</li>
-            <li><strong>Reporting Engine:</strong> Automated generation of performance reports and visualizations.</li>
+            <li><strong>Logging:</strong> Logs output daily as JSON</li>
+            <li><strong>Analytics:</strong> QuantStats tear sheets and trade tables auto-updated</li>
           </ul>
         </div>
       </section>
 
       <section className="mb-8">
         <h2 className="text-2xl font-bold mb-4">Development Process</h2>
-        <p>
-          The system follows a rigorous development and deployment process:
-        </p>
         <ol className="list-decimal pl-6 space-y-2">
-          <li><strong>Research & Hypothesis:</strong> Formulate trading hypotheses based on market observations and research.</li>
-          <li><strong>Feature Development:</strong> Design and implement features that capture the identified market inefficiencies.</li>
-          <li><strong>Model Training:</strong> Train and validate models on historical data with proper cross-validation.</li>
-          <li><strong>Backtesting:</strong> Extensive backtesting with transaction costs and realistic execution assumptions.</li>
-          <li><strong>Paper Trading:</strong> Live testing with simulated money to verify performance in real market conditions.</li>
-          <li><strong>Gradual Deployment:</strong> Phased deployment with increasing capital allocation based on performance.</li>
-          <li><strong>Continuous Monitoring:</strong> Ongoing monitoring and refinement of all system components.</li>
+          <li><strong>Hypothesis Generation:</strong> Formulate trading hypotheses based on market observations</li>
+          <li><strong>Feature Research:</strong> Design and test features to capture market inefficiencies</li>
+          <li><strong>Model Training:</strong> Cross-validated training with realistic assumptions</li>
+          <li><strong>Backtesting:</strong> Slippage-aware backtests across different market regimes</li>
+          <li><strong>Paper Trading:</strong> Validation in live markets without real capital</li>
+          <li><strong>Live Deployment:</strong> Gradual scaling of capital based on performance metrics</li>
+          <li><strong>Monitoring & Refinement:</strong> Continuous monitoring and model improvements</li>
         </ol>
       </section>
       
       <section className="mb-8">
         <h2 className="text-2xl font-bold mb-4">Technologies Used</h2>
-        <ul className="list-disc pl-6 grid grid-cols-1 md:grid-cols-2 gap-2">
-          <li><strong>Programming Languages:</strong> Python, TypeScript, C#</li>
-          <li><strong>Machine Learning:</strong> TensorFlow, XGBoost, scikit-learn</li>
-          <li><strong>Data Processing:</strong> Pandas, NumPy, Apache Spark</li>
-          <li><strong>Trading Platform:</strong> NinjaTrader, Interactive Brokers API</li>
-          <li><strong>Infrastructure:</strong> AWS, Docker, Kubernetes</li>
-          <li><strong>Monitoring:</strong> Prometheus, Grafana, custom dashboards</li>
-        </ul>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <h3 className="text-lg font-semibold mb-2">Languages</h3>
+            <p className="text-gray-600">Python, SQL, C++, TypeScript</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-2">ML/Modeling</h3>
+            <p className="text-gray-600">XGBoost, PyTorch, TensorFlow, scikit-learn, Optuna</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-2">Data</h3>
+            <p className="text-gray-600">Pandas, NumPy, Dask, Vaex</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-2">Infrastructure</h3>
+            <p className="text-gray-600">Heroku, Docker, Git, REST APIs, FastAPI</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-2">Trading</h3>
+            <p className="text-gray-600">NinjaTrader, Polygon.io, IBKR API</p>
+          </div>
+        </div>
       </section>
 
       <section className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Results</h2>
-        <p>
-          The trading system has demonstrated consistent performance across various market conditions. 
-          Detailed performance metrics can be found on the <a href="/performance" className="text-blue-600 hover:text-blue-800">Performance</a> page, 
-          which shows actual trading results including the equity curve, Sharpe ratio, drawdowns, and win rate.
-        </p>
-      </section>
-
-      <section className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Future Development</h2>
-        <p>
-          Ongoing and planned improvements to the system include:
-        </p>
+        <h2 className="text-2xl font-bold mb-4">Roadmap</h2>
         <ul className="list-disc pl-6 space-y-1">
-          <li>Expansion to additional futures markets and asset classes</li>
-          <li>Integration of alternative data sources</li>
-          <li>Further optimization of execution algorithms</li>
-          <li>Implementation of deep reinforcement learning for dynamic strategy adaptation</li>
+          <li>Add support for crude oil and RTY futures</li>
+          <li>Train RL-based dynamic exit modules</li>
+          <li>Incorporate model retraining pipeline</li>
+          <li>Deploy regime filters to optimize model switching</li>
         </ul>
       </section>
     </div>

@@ -361,12 +361,30 @@ export default function PerformancePage() {
               mode: 'lines',
               fill: 'tozeroy',
               fillcolor: 'rgba(59, 130, 246, 0.1)',
-              line: { 
-                width: 3, 
+              line: {
+                width: 3,
                 color: '#2563EB',
-                shape: 'spline' 
+                shape: 'spline'
               },
               name: 'Equity Curve',
+            },
+            {
+              // Create a projected line from last data point to current date (including weekends)
+              x: [
+                data.equity_curve.dates[data.equity_curve.dates.length - 1],
+                new Date().toISOString().split('T')[0] + ' 16:00'
+              ],
+              y: [
+                data.equity_curve.values[data.equity_curve.values.length - 1],
+                data.equity_curve.values[data.equity_curve.values.length - 1]
+              ],
+              type: 'scatter',
+              mode: 'lines',
+              line: {
+                width: 2,
+                color: '#ef4444' // red color, solid line
+              },
+              name: 'Delayed Data',
             }
           ]}
           layout={{
@@ -374,12 +392,17 @@ export default function PerformancePage() {
             autosize: true,
             height: 450,
             margin: { t: 20, l: 50, r: 30, b: 50 },
-            xaxis: { 
+            xaxis: {
               title: '',
               showgrid: false,
-              zeroline: false
+              zeroline: false,
+              // Extend the range slightly to show the full projected line
+              range: [
+                null, // auto for start date
+                new Date(new Date().toISOString().split('T')[0] + ' 23:59').getTime() // end of today
+              ]
             },
-            yaxis: { 
+            yaxis: {
               title: 'P&L ($)',
               zeroline: true,
               zerolinecolor: '#e5e7eb',
@@ -389,12 +412,17 @@ export default function PerformancePage() {
             plot_bgcolor: 'white',
             legend: {
               orientation: 'h',
-              y: 1.1
+              y: 1.1,
+              xanchor: 'center',
+              x: 0.5,
+              bgcolor: 'rgba(255, 255, 255, 0.8)',
+              bordercolor: '#e5e7eb',
+              borderwidth: 1
             },
             font: {
               family: 'system-ui, -apple-system, sans-serif'
             },
-            hovermode: 'x unified'
+            hovermode: false
           }}
           style={{ width: '100%', height: '100%' }}
           config={{ 

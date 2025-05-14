@@ -198,21 +198,21 @@ export default function ProjectsPage() {
             <div>
               <div className="flex justify-between mb-1">
                 <span className="text-blue-200 font-medium">Market Expansion</span>
-                <span className="text-gray-400 text-xs">35% complete</span>
+                <span className="text-gray-400 text-xs">50% complete</span>
               </div>
               <div className="w-full bg-gray-700 rounded-full h-2">
-                <div className="bg-blue-500 h-2 rounded-full" style={{width: "35%"}}></div>
+                <div className="bg-blue-500 h-2 rounded-full" style={{width: "50%"}}></div>
               </div>
-              <p className="text-gray-400 text-sm mt-1">Extend strategy coverage to crude oil futures and Russell 2000 micro contracts</p>
+              <p className="text-gray-400 text-sm mt-1">Extend strategy coverage to crude oil futures and equities (AAPL, UHS, UVXY)</p>
             </div>
             
             <div>
               <div className="flex justify-between mb-1">
                 <span className="text-blue-200 font-medium">Exit Optimization</span>
-                <span className="text-gray-400 text-xs">65% complete</span>
+                <span className="text-gray-400 text-xs">80% complete</span>
               </div>
               <div className="w-full bg-gray-700 rounded-full h-2">
-                <div className="bg-purple-500 h-2 rounded-full" style={{width: "65%"}}></div>
+                <div className="bg-purple-500 h-2 rounded-full" style={{width: "80%"}}></div>
               </div>
               <p className="text-gray-400 text-sm mt-1">Implement reinforcement learning approaches for dynamic exit decisions</p>
             </div>
@@ -220,10 +220,10 @@ export default function ProjectsPage() {
             <div>
               <div className="flex justify-between mb-1">
                 <span className="text-blue-200 font-medium">Model Maintenance</span>
-                <span className="text-gray-400 text-xs">20% complete</span>
+                <span className="text-gray-400 text-xs">35% complete</span>
               </div>
               <div className="w-full bg-gray-700 rounded-full h-2">
-                <div className="bg-green-500 h-2 rounded-full" style={{width: "20%"}}></div>
+                <div className="bg-green-500 h-2 rounded-full" style={{width: "35%"}}></div>
               </div>
               <p className="text-gray-400 text-sm mt-1">Develop automated retraining pipeline with drift detection</p>
             </div>
@@ -231,10 +231,10 @@ export default function ProjectsPage() {
             <div>
               <div className="flex justify-between mb-1">
                 <span className="text-blue-200 font-medium">Regime Awareness</span>
-                <span className="text-gray-400 text-xs">50% complete</span>
+                <span className="text-gray-400 text-xs">65% complete</span>
               </div>
               <div className="w-full bg-gray-700 rounded-full h-2">
-                <div className="bg-indigo-500 h-2 rounded-full" style={{width: "50%"}}></div>
+                <div className="bg-indigo-500 h-2 rounded-full" style={{width: "65%"}}></div>
               </div>
               <p className="text-gray-400 text-sm mt-1">Deploy more sophisticated regime classification to optimize strategy selection</p>
             </div>

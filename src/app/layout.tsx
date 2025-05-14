@@ -31,10 +31,13 @@ export default function RootLayout({
         <header className="bg-gray-900 text-white shadow-md">
           <nav className="container mx-auto px-6 py-4">
             <div className="flex justify-between items-center">
-              <div className="text-xl font-bold">AlgoTrader</div>
+              <div className="text-xl font-bold">Live Trading Engine</div>
               <div className="space-x-6">
                 <Link href="/" className="hover:text-blue-400 transition-colors">
-                  About
+                  Home
+                </Link>
+                <Link href="/#about-me" className="hover:text-blue-400 transition-colors">
+                  About Me
                 </Link>
                 <Link href="/projects" className="hover:text-blue-400 transition-colors">
                   Project
@@ -53,13 +56,13 @@ export default function RootLayout({
           <div className="container mx-auto px-6 py-8">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="mb-4 md:mb-0">
-                <p>&copy; {new Date().getFullYear()} AlgoTrader. All rights reserved.</p>
+                <p>&copy; {new Date().getFullYear()} Live Trading Engine. All rights reserved.</p>
               </div>
               <div className="flex space-x-4">
-                <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
+                <a href="https://github.com/SANTASLAYERS" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
                   GitHub
                 </a>
-                <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
+                <a href="https://www.linkedin.com/in/antoine-pangas/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
                   LinkedIn
                 </a>
               </div>

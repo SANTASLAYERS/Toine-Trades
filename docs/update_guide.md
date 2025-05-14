@@ -15,19 +15,22 @@ This document outlines the process for updating trading performance data on the 
 2. Navigate to **Control Center** > **Trade Performance** > **Executions**
 3. Set desired date range for the export
 4. Click **Export** button (CSV format)
-5. Save the file with a name starting with "NinjaTrader" (e.g., `NinjaTrader Grid 2025-05-13.csv`) in the project root directory
+5. Save the file with a name starting with "NinjaTrader" (e.g., `NinjaTrader Grid 2025-05-13.csv`)
+6. Move the file to the `public/data/` directory in your project
 
 ### 2. Push the CSV File to the Repository
 
-After exporting the CSV file, commit and push it to the repository:
+After exporting the CSV file and placing it in the public/data directory, commit and push it to the repository:
 
 ```bash
-git add "NinjaTrader*.csv"
+git add "public/data/NinjaTrader*.csv"
 git commit -m "perf update $(date +%F)"
 git push origin main
 ```
 
-The website will automatically load the most recent NinjaTrader CSV file when visitors access the performance page.
+The website will automatically load the most recent NinjaTrader CSV file from the public/data directory when visitors access the performance page.
+
+> **Important:** Always place CSV files in the `public/data/` directory, not in the project root. This ensures compatibility with Vercel's file system structure.
 
 > **Note:** The old method using the Python converter (nt2json.py) is no longer required as the application now reads directly from the CSV file.
 

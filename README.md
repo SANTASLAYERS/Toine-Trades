@@ -91,28 +91,37 @@ pnpm build
 The website displays performance data from real trading results. To update this data:
 
 1. Export trade data from NinjaTrader as CSV
-2. Save the file with a name starting with "NinjaTrader" (e.g., `NinjaTrader Grid 2025-05-13.csv`) in the project root directory
-3. Commit and push changes:
+2. Save the file with a name starting with "NinjaTrader" (e.g., `NinjaTrader Grid 2025-05-13.csv`)
+3. Place the file in the `public/data/` directory of your project
+4. Commit and push changes:
    ```bash
-   git add "NinjaTrader*.csv"
+   git add "public/data/NinjaTrader*.csv"
    git commit -m "perf update $(date +%F)"
    git push origin main
    ```
 
-The website will automatically load the most recent NinjaTrader CSV file when visitors access the performance page.
+The website will automatically load the most recent NinjaTrader CSV file from the public/data directory when visitors access the performance page.
+
+> **Important for Vercel compatibility:** Always place CSV files in the `public/data/` directory, not in the project root.
 
 For detailed instructions, see [docs/update_guide.md](docs/update_guide.md).
 
 ## Deployment
 
-This project is configured for easy deployment on Vercel:
+This project is configured for easy deployment on Vercel. For full instructions, see [docs/deployment_guide.md](docs/deployment_guide.md).
+
+Quick deployment steps:
 
 ```bash
+# Push to GitHub first
+git push origin main
+
+# Then deploy to Vercel
 vercel login
 vercel --prod
 ```
 
-For custom domains, configure them through the Vercel dashboard.
+Important: Make sure to include a NinjaTrader CSV file in the `public/data/` directory before deploying to Vercel.
 
 ## License
 

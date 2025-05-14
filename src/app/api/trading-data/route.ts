@@ -4,20 +4,20 @@ import path from 'path';
 
 export async function GET() {
   try {
-    // Find the NinjaTrader CSV file in the project root
-    const projectRoot = process.cwd();
-    const files = fs.readdirSync(projectRoot);
+    // Find the NinjaTrader CSV file in the public/data directory
+    const publicDataDir = path.join(process.cwd(), 'public', 'data');
+    const files = fs.readdirSync(publicDataDir);
     const csvFile = files.find(file => file.startsWith('NinjaTrader') && file.endsWith('.csv'));
-    
+
     if (!csvFile) {
-      return NextResponse.json({ 
-        success: false, 
-        error: 'No NinjaTrader CSV file found' 
+      return NextResponse.json({
+        success: false,
+        error: 'No NinjaTrader CSV file found in public/data directory'
       }, { status: 404 });
     }
-    
+
     // Read the CSV file content
-    const filePath = path.join(projectRoot, csvFile);
+    const filePath = path.join(publicDataDir, csvFile);
     const csvData = fs.readFileSync(filePath, 'utf-8');
     
     // Return the CSV data

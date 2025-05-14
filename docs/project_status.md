@@ -108,10 +108,14 @@
    - Added proper TypeScript types to replace `any` in the performance page
    - Created `.eslintrc.json` to override problematic rules
 4. ✅ Updated Performance page to use NinjaTrader CSV directly:
-   - Added API route to read NinjaTrader CSV files from the project root
+   - Added API route to read NinjaTrader CSV files from the `public/data/` directory
    - Added CSV parsing with PapaParse
    - Implemented real-time calculation of metrics from CSV data
    - Created dynamic sorting and filtering capabilities for trade data
+5. ✅ Made project Vercel-compatible:
+   - Moved CSV files to `public/data/` for Vercel compatibility
+   - Updated API to read from the public directory instead of project root
+   - Created a sample CSV file for testing
 5. ✅ Added TypeScript declarations for third-party libraries:
    - Created type declarations for `react-plotly.js`
    - Updated tsconfig.json to include custom type definitions
@@ -121,7 +125,12 @@
    - Simplified Next.js configuration for reliable builds
    - Added ESLint and TypeScript error bypassing for production builds
    - Fixed proper module imports and removed unused dependencies
-7. ✅ These changes ensure that:
+7. ✅ Enhanced documentation for Vercel deployment:
+   - Created detailed Vercel deployment guide
+   - Updated README with clear deployment instructions
+   - Added specific notes about CSV file requirements for Vercel
+   - Included troubleshooting tips for common deployment issues
+8. ✅ These changes ensure that:
    - React hooks like `useState` work properly on client components
    - Project page renders reliably without MDX compatibility issues
    - Build process completes successfully for production deployment

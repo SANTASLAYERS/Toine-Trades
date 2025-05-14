@@ -1,9 +1,6 @@
 import { NextResponse } from 'next/server';
 
-// This API route should be excluded from static generation
-export const generateStaticParams = () => [];
-
-// Use dynamic to ensure this API route is always fresh
+// Use dynamic to ensure this API route is always fresh, not statically generated
 export const dynamic = 'force-dynamic';
 
 export async function GET() {

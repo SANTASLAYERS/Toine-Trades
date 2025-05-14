@@ -1,8 +1,7 @@
 'use client';
 
-// This tells Next.js that this page should be excluded from static generation
-// By returning an empty array, we're saying there are no static params for this page
-export const generateStaticParams = () => [];
+// We can't use generateStaticParams with 'use client'
+// Instead, we'll rely on dynamic = 'force-dynamic' in the layout
 
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";

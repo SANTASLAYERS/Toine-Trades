@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
   return (
-    <article className="prose lg:prose-xl max-w-none">
+    <article className="prose lg:prose-xl max-w-none text-gray-900">
       <header>
         <h1 className="text-3xl font-bold mb-8">Mean Reversion Trading System</h1>
       </header>
@@ -17,7 +17,7 @@ export default function ProjectsPage() {
       <section className="mb-12">
         <h2 className="text-2xl font-bold mb-4">System Architecture</h2>
         
-        <p className="text-gray-700 mb-5 leading-relaxed">
+        <p className="text-gray-900 mb-5 leading-relaxed">
           This trading system implements a short-term mean reversion strategy targeting price dislocations in 
           micro e-mini futures markets. The architecture prioritizes rapid signal generation, precise execution timing, 
           and robust risk controls—all critical for capturing fleeting market inefficiencies that typically
@@ -35,11 +35,11 @@ export default function ProjectsPage() {
         
         <div className="mb-8">
           <h3 className="text-xl font-bold mb-3">Feature Pipeline</h3>
-          <p className="text-gray-700 mb-4">
+          <p className="text-gray-900 mb-4">
             The feature pipeline ingests real-time market data, transforms it into predictive signals, 
             and delivers these to the model stack with minimal latency.
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-gray-700">
+          <ul className="list-disc pl-6 space-y-2 text-gray-900">
             <li><strong>Level-2 Data Processing:</strong> Real-time analysis of orderbook imbalance, 
             spread volatility, and depth distribution patterns</li>
             <li><strong>Statistical Feature Generation:</strong> Calculation of adaptive z-scores, 
@@ -51,11 +51,11 @@ export default function ProjectsPage() {
         
         <div className="mb-8">
           <h3 className="text-xl font-bold mb-3">Model Architecture</h3>
-          <p className="text-gray-700 mb-4">
+          <p className="text-gray-900 mb-4">
             The system employs a dual-model approach, separating entry signal generation from exit timing 
             optimization to achieve greater specialization.
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-gray-700">
+          <ul className="list-disc pl-6 space-y-2 text-gray-900">
             <li><strong>Entry Model:</strong> Gradient-boosted classifier trained specifically on 
             high-confidence reversal patterns identified through historical analysis</li>
             <li><strong>Exit Model:</strong> Regression-based approach optimizing for risk-adjusted returns 
@@ -75,11 +75,11 @@ export default function ProjectsPage() {
         
         <div className="mb-8">
           <h3 className="text-xl font-bold mb-3">Risk Management Framework</h3>
-          <p className="text-gray-700 mb-4">
+          <p className="text-gray-900 mb-4">
             The risk framework operates at multiple time scales, from trade-level stop placement 
             to system-wide position sizing and drawdown controls.
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-gray-700">
+          <ul className="list-disc pl-6 space-y-2 text-gray-900">
             <li><strong>Position Sizing:</strong> Dynamic allocation based on recent volatility measurements,
             scaling exposure inversely with market turbulence</li>
             <li><strong>Stop-Loss Mechanism:</strong> Adaptive stops calculated from intrabar volatility patterns 
@@ -91,11 +91,11 @@ export default function ProjectsPage() {
         
         <div className="mb-8">
           <h3 className="text-xl font-bold mb-3">Execution Infrastructure</h3>
-          <p className="text-gray-700 mb-4">
+          <p className="text-gray-900 mb-4">
             The execution layer bridges the gap between signal generation and market interaction,
             optimizing for minimal latency and slippage.
           </p>
-          <ul className="list-disc pl-6 space-y-2 text-gray-700">
+          <ul className="list-disc pl-6 space-y-2 text-gray-900">
             <li><strong>Signal Generation:</strong> Hosted on Heroku for reliable cloud compute with 
             consistent performance characteristics</li>
             <li><strong>Order Management:</strong> Custom interface layer connecting to NinjaTrader's API 
@@ -108,7 +108,7 @@ export default function ProjectsPage() {
 
       <section className="mb-12">
         <h2 className="text-2xl font-bold mb-4">Development Methodology</h2>
-        <p className="text-gray-700 mb-5">
+        <p className="text-gray-900 mb-5">
           The development process follows a structured path from hypothesis formation to live deployment,
           with each stage building confidence in the strategy's robustness.
         </p>
@@ -154,11 +154,11 @@ export default function ProjectsPage() {
 
       <section className="mb-12">
         <h2 className="text-2xl font-bold mb-4">System Roadmap</h2>
-        <p className="text-gray-700 mb-5">
+        <p className="text-gray-900 mb-5">
           Ongoing development focuses on extending market coverage, enhancing model sophistication,
           and implementing additional automation for system maintenance.
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-gray-700">
+        <ul className="list-disc pl-6 space-y-2 text-gray-900">
           <li><strong>Market Expansion:</strong> Extend strategy coverage to crude oil futures and Russell 2000 micro contracts</li>
           <li><strong>Exit Optimization:</strong> Implement reinforcement learning approaches for dynamic exit decisions</li>
           <li><strong>Model Maintenance:</strong> Develop automated retraining pipeline with drift detection</li>

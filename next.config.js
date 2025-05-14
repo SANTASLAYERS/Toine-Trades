@@ -17,7 +17,9 @@ const nextConfig = {
   
   // Debug settings
   experimental: {
-    logging: 'verbose'
+    logging: 'verbose',
+    // Adjust settings to be more compatible with Vercel deployment
+    serverComponentsExternalPackages: ['plotly.js'],
   },
   
   // Production settings

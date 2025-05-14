@@ -38,16 +38,16 @@ export default function Home() {
               <div>Trades under 5 min</div>
             </div>
             <div className="border-l-2 border-blue-400 pl-3">
-              <div className="font-bold text-2xl text-white">2.75</div>
+              <div className="font-bold text-2xl text-white">2.3</div>
               <div>Sharpe Ratio</div>
             </div>
             <div className="border-l-2 border-blue-400 pl-3">
-              <div className="font-bold text-2xl text-white">67.5%</div>
+              <div className="font-bold text-2xl text-white">53%</div>
               <div>Win Rate</div>
             </div>
             <div className="border-l-2 border-blue-400 pl-3">
-              <div className="font-bold text-2xl text-white">Live</div>
-              <div>Since April 2025</div>
+              <div className="font-bold text-2xl text-white">1.18</div>
+              <div>Win/Loss Ratio</div>
             </div>
           </div>
           
@@ -148,11 +148,11 @@ export default function Home() {
                   </div>
                   <div>
                     <dt className="text-sm font-medium text-blue-600 mb-1">Avg. Trade Duration</dt>
-                    <dd className="text-gray-800">2.7 minutes</dd>
+                    <dd className="text-gray-800">2.2 minutes</dd>
                   </div>
                   <div>
                     <dt className="text-sm font-medium text-blue-600 mb-1">Trade Frequency</dt>
-                    <dd className="text-gray-800">5-15 trades per day</dd>
+                    <dd className="text-gray-800">15-25 trades per day</dd>
                   </div>
                   <div>
                     <dt className="text-sm font-medium text-blue-600 mb-1">Data Sources</dt>
@@ -272,7 +272,7 @@ export default function Home() {
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
-                  <span className="text-white font-medium">antoine.pangas@umich.edu</span>
+                  <span className="text-white font-medium">pangasantoine@gmail.com</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -353,7 +353,8 @@ export default function Home() {
               <div>
                 <h4 className="font-medium text-gray-700 mb-2">Trading Execution</h4>
                 <ul className="text-gray-600 text-sm space-y-1">
-                  <li>• NinjaTrader integration</li>
+                  <li>• IB API integration</li>
+                  <li>• NinjaTrader implementation</li>
                   <li>• Custom order routing</li>
                 </ul>
               </div>
@@ -393,19 +394,19 @@ export default function Home() {
               <dl className="grid grid-cols-2 gap-4">
                 <div>
                   <dt className="text-xs text-gray-500">Sharpe Ratio</dt>
-                  <dd className="text-2xl font-bold text-blue-600">2.75</dd>
+                  <dd className="text-2xl font-bold text-blue-600">2.3</dd>
                 </div>
                 <div>
                   <dt className="text-xs text-gray-500">Win Rate</dt>
-                  <dd className="text-2xl font-bold text-blue-600">67.5%</dd>
+                  <dd className="text-2xl font-bold text-blue-600">53%</dd>
                 </div>
                 <div>
                   <dt className="text-xs text-gray-500">Max Drawdown</dt>
                   <dd className="text-2xl font-bold text-blue-600">8.54%</dd>
                 </div>
                 <div>
-                  <dt className="text-xs text-gray-500">Total P&L</dt>
-                  <dd className="text-2xl font-bold text-blue-600">$6,972</dd>
+                  <dt className="text-xs text-gray-500">Win/Loss Ratio</dt>
+                  <dd className="text-2xl font-bold text-blue-600">1.18</dd>
                 </div>
               </dl>
               <div className="mt-3 text-right">

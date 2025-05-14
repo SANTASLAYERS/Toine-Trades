@@ -1,8 +1,5 @@
 'use client';
 
-// Set nodejs runtime to avoid Edge compatibility issues
-export const runtime = 'nodejs';
-
 import Link from 'next/link';
 
 export default function Home() {

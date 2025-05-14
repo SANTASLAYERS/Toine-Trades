@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
-// Set nodejs runtime to avoid Edge compatibility issues
-export const runtime = 'nodejs';
+// Use dynamic to ensure this page is never statically generated
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   console.log('API Route Handler Triggered');

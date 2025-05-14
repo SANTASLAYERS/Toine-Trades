@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
-// Set to nodejs runtime for consistency across the app
-export const runtime = 'nodejs';
+// This is a static page, no need for runtime or dynamic settings
 
 export const metadata: Metadata = {
   title: "Project Overview",

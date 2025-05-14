@@ -1,19 +1,20 @@
-"use client";
+'use client';
 
-// Explicitly set runtime to nodejs for CSV parsing
-export const runtime = 'nodejs';
-
-// Export with forced dynamic rendering to ensure fresh data
-// This prevents issues with static generation (output: 'export')
-export const dynamic = 'force-dynamic';
+// This is a fully client component, so we don't need runtime or dynamic exports
+// which can cause errors during static build
 
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import type { NextPage } from "next";
 import Papa from 'papaparse';
 
-// Import Plotly dynamically (client-side only)
-const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
+// Import Plotly dynamically with explicit SSR: false flag
+const Plot = dynamic(() => import("react-plotly.js"), {
+  ssr: false,
+  loading: () => <div className="w-full h-96 bg-gray-100 flex items-center justify-center">
+    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+  </div>
+});
 
 // Define trade type
 type Trade = {

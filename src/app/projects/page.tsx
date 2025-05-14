@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 
+// Set to nodejs runtime for consistency across the app
+export const runtime = 'nodejs';
+
 export const metadata: Metadata = {
   title: "Project Overview",
   description: "Details about the algorithmic trading system architecture and components",

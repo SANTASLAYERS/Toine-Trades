@@ -15,7 +15,17 @@ const nextConfig = {
   },
   images: {
     unoptimized: true, // For static exports
-  }
+  },
+  experimental: {
+    // Help with troubleshooting by showing more detailed error messages
+    logging: 'verbose'
+  },
+  // Set this to help with debugging 404s
+  trailingSlash: false,
+  // Adding output configuration
+  output: 'standalone',
+  // Ensure source maps are generated
+  productionBrowserSourceMaps: true
 };
 
 module.exports = nextConfig;

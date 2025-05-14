@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   description: "Portfolio website showcasing my algorithmic trading system",
 };
 
+// Set to nodejs runtime to avoid Edge function issues
+export const runtime = 'nodejs';
+
 export default function RootLayout({
   children,
 }: Readonly<{

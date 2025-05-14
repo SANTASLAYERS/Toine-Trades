@@ -1,5 +1,8 @@
 "use client";
 
+// Explicitly set runtime to nodejs for CSV parsing
+export const runtime = 'nodejs';
+
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import type { NextPage } from "next";

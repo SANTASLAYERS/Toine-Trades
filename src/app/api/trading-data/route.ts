@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server';
 
+// Set nodejs runtime to avoid Edge compatibility issues
+export const runtime = 'nodejs';
+
 export async function GET() {
   try {
     // Try to fetch the sample CSV file first

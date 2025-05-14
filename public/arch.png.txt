@@ -1,0 +1,2 @@
+This is a placeholder for the architecture diagram image. 
+Replace this with a real PNG file showing your trading system architecture.

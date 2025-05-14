@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import type { NextPage } from "next";
-import fs from 'fs';
-import path from 'path';
 import Papa from 'papaparse';
 
 // Import Plotly dynamically (client-side only)
@@ -403,10 +401,10 @@ const PerformancePage: NextPage = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {sortedTrades.map((trade, index) => {
                   // Parse profit value for coloring
-                  let profitValue = trade.Profit || "";
-                  let isNegative = profitValue.includes('(');
-                  let profitClass = isNegative ? "text-red-700" : "text-green-700";
-                  
+                  const profitValue = trade.Profit || "";
+                  const isNegative = profitValue.includes('(');
+                  const profitClass = isNegative ? "text-red-700" : "text-green-700";
+
                   return (
                     <tr key={index} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">

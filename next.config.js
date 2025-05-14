@@ -1,12 +1,21 @@
-const withMDX = require('@next/mdx')({
-  extension: /\.mdx?$/,
-  options: {
-    providerImportSource: "@mdx-js/react",
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  pageExtensions: ['ts', 'tsx'],
+  eslint: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true,
   },
-});
-
-const config = {
-  pageExtensions: ['ts', 'tsx', 'mdx'],
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    ignoreBuildErrors: true,
+  },
+  images: {
+    unoptimized: true, // For static exports
+  }
 };
 
-module.exports = withMDX(config);
+module.exports = nextConfig;

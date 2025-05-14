@@ -330,13 +330,28 @@ export default function PerformancePage() {
 
   return (
     <section className="max-w-5xl mx-auto px-6 py-12 bg-gray-50 rounded-lg shadow-sm my-8">
-      <h1 className="text-3xl font-bold mb-2 text-gray-800">Trading Performance <span className="text-sm font-normal text-gray-500">(delayed)</span></h1>
-      <p className="mb-8 text-gray-700 font-medium">
-        Real-time cumulative P&L from live futures trading
-      </p>
+      <h1 className="text-3xl font-bold mb-2 text-gray-800 group flex items-center">
+        Trading Performance
+        <span className="text-sm font-normal text-gray-500 ml-2">(delayed)</span>
+        <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-blue-500 text-sm">📈</span>
+      </h1>
+      <div className="mb-8 border-l-2 border-blue-400 pl-3 transition-all duration-300 hover:bg-blue-50 hover:border-blue-500 hover:pl-4 rounded-r py-1">
+        <p className="text-gray-700 font-medium">
+          Real-time cumulative P&L from live futures trading
+        </p>
+      </div>
       
       {/* Equity Curve Plot */}
-      <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+      <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 mb-8 border border-transparent hover:border-blue-100">
+        <div className="mb-4 flex items-center justify-between">
+          <h3 className="text-lg font-semibold text-gray-800 group flex items-center">
+            Equity Curve
+            <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-blue-500 text-sm">💰</span>
+          </h3>
+          <div className="text-sm text-gray-500 bg-blue-50 px-3 py-1 rounded-full transition-colors duration-300 hover:bg-blue-100 hover:text-blue-700">
+            Cumulative P&L Over Time
+          </div>
+        </div>
         <Plot
           data={[
             {
@@ -394,22 +409,25 @@ export default function PerformancePage() {
       {/* Key Metrics Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
         {/* Core Performance Metrics */}
-        <div className="col-span-1 lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-bold mb-4 text-gray-800">Performance Summary</h2>
+        <div className="col-span-1 lg:col-span-2 bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+          <h2 className="text-xl font-bold mb-4 text-gray-800 group flex items-center">
+            Performance Summary
+            <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-blue-500 text-sm">📊</span>
+          </h2>
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-blue-50 p-4 rounded-lg">
+            <div className="bg-blue-50 p-4 rounded-lg transition-all duration-300 hover:bg-blue-100 hover:shadow-md hover:shadow-blue-200 border border-transparent hover:border-blue-200 transform hover:-translate-y-1">
               <p className="text-sm font-medium text-blue-700 mb-1">Total P&L</p>
               <p className="text-2xl font-bold text-blue-900">${calculatedMetrics.totalPnL}</p>
             </div>
-            <div className="bg-green-50 p-4 rounded-lg">
+            <div className="bg-green-50 p-4 rounded-lg transition-all duration-300 hover:bg-green-100 hover:shadow-md hover:shadow-green-200 border border-transparent hover:border-green-200 transform hover:-translate-y-1">
               <p className="text-sm font-medium text-green-700 mb-1">Win Rate</p>
               <p className="text-2xl font-bold text-green-900">{calculatedMetrics.winRate}%</p>
             </div>
-            <div className="bg-purple-50 p-4 rounded-lg">
+            <div className="bg-purple-50 p-4 rounded-lg transition-all duration-300 hover:bg-purple-100 hover:shadow-md hover:shadow-purple-200 border border-transparent hover:border-purple-200 transform hover:-translate-y-1">
               <p className="text-sm font-medium text-purple-700 mb-1">Profit Factor</p>
               <p className="text-2xl font-bold text-purple-900">{calculatedMetrics.profitFactor}</p>
             </div>
-            <div className="bg-red-50 p-4 rounded-lg">
+            <div className="bg-red-50 p-4 rounded-lg transition-all duration-300 hover:bg-red-100 hover:shadow-md hover:shadow-red-200 border border-transparent hover:border-red-200 transform hover:-translate-y-1">
               <p className="text-sm font-medium text-red-700 mb-1">Max Drawdown</p>
               <p className="text-2xl font-bold text-red-900">{calculatedMetrics.maxDrawdown}%</p>
             </div>
@@ -417,8 +435,11 @@ export default function PerformancePage() {
         </div>
 
         {/* Recent Trades */}
-        <div className="col-span-1 lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-bold mb-4 text-gray-800">Recent Trades</h2>
+        <div className="col-span-1 lg:col-span-2 bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+          <h2 className="text-xl font-bold mb-4 text-gray-800 group flex items-center">
+            Recent Trades
+            <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-blue-500 text-sm">🕒</span>
+          </h2>
           <div className="overflow-hidden overflow-x-auto">
             <table className="min-w-full text-sm">
               <thead>
@@ -431,10 +452,10 @@ export default function PerformancePage() {
               </thead>
               <tbody>
                 {data.trades.slice(-5).reverse().map((trade, index) => (
-                  <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                  <tr key={index} className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} transition-colors duration-200 hover:bg-blue-50`}>
                     <td className="py-2 px-3 font-medium">{trade.Instrument}</td>
                     <td className="py-2 px-3">
-                      <span className={`inline-block px-2 py-1 rounded text-xs font-medium ${trade['Market pos.'] === 'Long' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                      <span className={`inline-block px-2 py-1 rounded text-xs font-medium ${trade['Market pos.'] === 'Long' ? 'bg-green-100 text-green-800 hover:bg-green-200' : 'bg-red-100 text-red-800 hover:bg-red-200'} transition-colors duration-200`}>
                         {trade['Market pos.']}
                       </span>
                     </td>
@@ -451,72 +472,84 @@ export default function PerformancePage() {
       </div>
 
       {/* Advanced Metrics Section */}
-      <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-        <h2 className="text-xl font-bold mb-4 text-gray-800">Advanced Trading Metrics</h2>
+      <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 mb-8">
+        <h2 className="text-xl font-bold mb-4 text-gray-800 group flex items-center">
+          Advanced Trading Metrics
+          <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-blue-500 text-sm">🔍</span>
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Trade Timing */}
-          <div className="bg-indigo-50 p-4 rounded-lg">
-            <h3 className="text-md font-semibold text-indigo-900 mb-2">Trade Timing</h3>
+          <div className="bg-indigo-50 p-4 rounded-lg transition-all duration-300 hover:shadow-md hover:shadow-indigo-200 hover:bg-indigo-100 hover:-translate-y-1 border border-transparent hover:border-indigo-200">
+            <h3 className="text-md font-semibold text-indigo-900 mb-2 group flex items-center">
+              Trade Timing
+              <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600 text-sm">⏱️</span>
+            </h3>
             <div className="space-y-2">
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-indigo-200/30 hover:px-2 rounded">
                 <span className="text-indigo-800">Avg Holding Time:</span>
                 <span className="font-semibold text-indigo-900">{calculatedMetrics.avgHoldingTime} sec</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-indigo-200/30 hover:px-2 rounded">
                 <span className="text-indigo-800">Min Holding Time:</span>
                 <span className="font-semibold text-indigo-900">{calculatedMetrics.minHoldingTime} sec</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-indigo-200/30 hover:px-2 rounded">
                 <span className="text-indigo-800">Total Trades:</span>
                 <span className="font-semibold text-indigo-900">{calculatedMetrics.tradeCount}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-indigo-200/30 hover:px-2 rounded">
                 <span className="text-indigo-800">Trades Per Day:</span>
                 <span className="font-semibold text-indigo-900">{calculatedMetrics.tradesPerDay}</span>
               </div>
             </div>
           </div>
-          
+
           {/* Instrument Performance */}
-          <div className="bg-amber-50 p-4 rounded-lg">
-            <h3 className="text-md font-semibold text-amber-900 mb-2">Instrument Analysis</h3>
+          <div className="bg-amber-50 p-4 rounded-lg transition-all duration-300 hover:shadow-md hover:shadow-amber-200 hover:bg-amber-100 hover:-translate-y-1 border border-transparent hover:border-amber-200">
+            <h3 className="text-md font-semibold text-amber-900 mb-2 group flex items-center">
+              Instrument Analysis
+              <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-amber-600 text-sm">📊</span>
+            </h3>
             <div className="space-y-2">
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-amber-200/30 hover:px-2 rounded">
                 <span className="text-amber-800">Most Traded:</span>
                 <span className="font-semibold text-amber-900">{calculatedMetrics.primaryInstrument}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-amber-200/30 hover:px-2 rounded">
                 <span className="text-amber-800">Most Profitable:</span>
                 <span className="font-semibold text-amber-900">{calculatedMetrics.mostProfitableInstrument}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-amber-200/30 hover:px-2 rounded">
                 <span className="text-amber-800">Avg Position Size:</span>
                 <span className="font-semibold text-amber-900">{calculatedMetrics.avgQty} contracts</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-amber-200/30 hover:px-2 rounded">
                 <span className="text-amber-800">Max Position:</span>
                 <span className="font-semibold text-amber-900">{calculatedMetrics.maxQty} contracts</span>
               </div>
             </div>
           </div>
-          
+
           {/* Direction Analysis - Long */}
-          <div className="bg-emerald-50 p-4 rounded-lg">
-            <h3 className="text-md font-semibold text-emerald-900 mb-2">Long Trades</h3>
+          <div className="bg-emerald-50 p-4 rounded-lg transition-all duration-300 hover:shadow-md hover:shadow-emerald-200 hover:bg-emerald-100 hover:-translate-y-1 border border-transparent hover:border-emerald-200">
+            <h3 className="text-md font-semibold text-emerald-900 mb-2 group flex items-center">
+              Long Trades
+              <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-emerald-600 text-sm">📈</span>
+            </h3>
             <div className="space-y-2">
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-emerald-200/30 hover:px-2 rounded">
                 <span className="text-emerald-800">Count:</span>
                 <span className="font-semibold text-emerald-900">{calculatedMetrics.longTradeCount} trades</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-emerald-200/30 hover:px-2 rounded">
                 <span className="text-emerald-800">P&L:</span>
                 <span className="font-semibold text-emerald-900">${calculatedMetrics.longPnL}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-emerald-200/30 hover:px-2 rounded">
                 <span className="text-emerald-800">Win Rate:</span>
                 <span className="font-semibold text-emerald-900">{calculatedMetrics.longWinRate}%</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-emerald-200/30 hover:px-2 rounded">
                 <span className="text-emerald-800">Avg P&L Per Trade:</span>
                 <span className="font-semibold text-emerald-900">${(parseFloat(calculatedMetrics.longPnL) / calculatedMetrics.longTradeCount).toFixed(2)}</span>
               </div>
@@ -524,22 +557,25 @@ export default function PerformancePage() {
           </div>
 
           {/* Direction Analysis - Short */}
-          <div className="bg-sky-50 p-4 rounded-lg">
-            <h3 className="text-md font-semibold text-sky-900 mb-2">Short Trades</h3>
+          <div className="bg-sky-50 p-4 rounded-lg transition-all duration-300 hover:shadow-md hover:shadow-sky-200 hover:bg-sky-100 hover:-translate-y-1 border border-transparent hover:border-sky-200">
+            <h3 className="text-md font-semibold text-sky-900 mb-2 group flex items-center">
+              Short Trades
+              <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-sky-600 text-sm">📉</span>
+            </h3>
             <div className="space-y-2">
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-sky-200/30 hover:px-2 rounded">
                 <span className="text-sky-800">Count:</span>
                 <span className="font-semibold text-sky-900">{calculatedMetrics.shortTradeCount} trades</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-sky-200/30 hover:px-2 rounded">
                 <span className="text-sky-800">P&L:</span>
                 <span className="font-semibold text-sky-900">${calculatedMetrics.shortPnL}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-sky-200/30 hover:px-2 rounded">
                 <span className="text-sky-800">Win Rate:</span>
                 <span className="font-semibold text-sky-900">{calculatedMetrics.shortWinRate}%</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-sky-200/30 hover:px-2 rounded">
                 <span className="text-sky-800">Avg P&L Per Trade:</span>
                 <span className="font-semibold text-sky-900">${(parseFloat(calculatedMetrics.shortPnL) / calculatedMetrics.shortTradeCount).toFixed(2)}</span>
               </div>
@@ -547,22 +583,25 @@ export default function PerformancePage() {
           </div>
 
           {/* Trade Quality */}
-          <div className="bg-rose-50 p-4 rounded-lg">
-            <h3 className="text-md font-semibold text-rose-900 mb-2">Trade Quality</h3>
+          <div className="bg-rose-50 p-4 rounded-lg transition-all duration-300 hover:shadow-md hover:shadow-rose-200 hover:bg-rose-100 hover:-translate-y-1 border border-transparent hover:border-rose-200">
+            <h3 className="text-md font-semibold text-rose-900 mb-2 group flex items-center">
+              Trade Quality
+              <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-rose-600 text-sm">🎯</span>
+            </h3>
             <div className="space-y-2">
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-rose-200/30 hover:px-2 rounded">
                 <span className="text-rose-800">Avg Winning Trade:</span>
                 <span className="font-semibold text-rose-900">${calculatedMetrics.avgWin}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-rose-200/30 hover:px-2 rounded">
                 <span className="text-rose-800">Avg Losing Trade:</span>
                 <span className="font-semibold text-rose-900">${calculatedMetrics.avgLoss}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-rose-200/30 hover:px-2 rounded">
                 <span className="text-rose-800">Win/Loss Ratio:</span>
                 <span className="font-semibold text-rose-900">{calculatedMetrics.winLossRatio}x</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-rose-200/30 hover:px-2 rounded">
                 <span className="text-rose-800">Expectancy:</span>
                 <span className="font-semibold text-rose-900">${calculatedMetrics.expectancy}</span>
               </div>
@@ -570,45 +609,51 @@ export default function PerformancePage() {
           </div>
 
           {/* Price Analysis */}
-          <div className="bg-fuchsia-50 p-4 rounded-lg">
-            <h3 className="text-md font-semibold text-fuchsia-900 mb-2">Price Movement</h3>
+          <div className="bg-fuchsia-50 p-4 rounded-lg transition-all duration-300 hover:shadow-md hover:shadow-fuchsia-200 hover:bg-fuchsia-100 hover:-translate-y-1 border border-transparent hover:border-fuchsia-200">
+            <h3 className="text-md font-semibold text-fuchsia-900 mb-2 group flex items-center">
+              Price Movement
+              <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-fuchsia-600 text-sm">📏</span>
+            </h3>
             <div className="space-y-2">
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-fuchsia-200/30 hover:px-2 rounded">
                 <span className="text-fuchsia-800">Avg Price Movement:</span>
                 <span className="font-semibold text-fuchsia-900">{calculatedMetrics.avgPriceMovement} pts</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-fuchsia-200/30 hover:px-2 rounded">
                 <span className="text-fuchsia-800">Profit Per Point:</span>
                 <span className="font-semibold text-fuchsia-900">${calculatedMetrics.avgProfitPerPoint}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-fuchsia-200/30 hover:px-2 rounded">
                 <span className="text-fuchsia-800">Max Position Size:</span>
                 <span className="font-semibold text-fuchsia-900">{calculatedMetrics.maxQty} contracts</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-fuchsia-200/30 hover:px-2 rounded">
                 <span className="text-fuchsia-800">Min Position Size:</span>
                 <span className="font-semibold text-fuchsia-900">{calculatedMetrics.minQty} contracts</span>
               </div>
             </div>
           </div>
-          
+
           {/* Time Analysis */}
-          <div className="bg-violet-50 p-4 rounded-lg">
-            <h3 className="text-md font-semibold text-violet-900 mb-2">Time Analysis</h3>
+          <div className="bg-violet-50 p-4 rounded-lg transition-all duration-300 hover:shadow-md hover:shadow-violet-200 hover:bg-violet-100 hover:-translate-y-1 border border-transparent hover:border-violet-200">
+            <h3 className="text-md font-semibold text-violet-900 mb-2 group flex items-center">
+              Time Analysis
+              <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-violet-600 text-sm">⏰</span>
+            </h3>
             <div className="space-y-2">
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-violet-200/30 hover:px-2 rounded">
                 <span className="text-violet-800">Best Hour:</span>
                 <span className="font-semibold text-violet-900">{calculatedMetrics.bestHour}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-violet-200/30 hover:px-2 rounded">
                 <span className="text-violet-800">Best Hour P&L:</span>
                 <span className="font-semibold text-violet-900">${calculatedMetrics.bestHourProfit}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-violet-200/30 hover:px-2 rounded">
                 <span className="text-violet-800">Worst Hour:</span>
                 <span className="font-semibold text-violet-900">{calculatedMetrics.worstHour}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between transition-all duration-200 hover:bg-violet-200/30 hover:px-2 rounded">
                 <span className="text-violet-800">Worst Hour P&L:</span>
                 <span className="font-semibold text-violet-900">${calculatedMetrics.worstHourProfit}</span>
               </div>
@@ -617,14 +662,24 @@ export default function PerformancePage() {
         </div>
       </div>
 
-      <div className="bg-blue-800 text-white p-6 rounded-lg">
-        <h2 className="text-xl font-bold mb-2">Trading Strategy Overview</h2>
-        <p className="text-blue-100 mb-4">
+      <div className="bg-gradient-to-br from-blue-800 to-blue-900 text-white p-6 rounded-lg shadow-md hover:shadow-lg hover:shadow-blue-900/20 transition-all duration-300 border border-blue-700 hover:border-blue-600">
+        <h2 className="text-xl font-bold mb-2 group flex items-center">
+          Trading Strategy Overview
+          <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-blue-300 text-sm">💼</span>
+        </h2>
+        <p className="text-blue-100 mb-4 transition-all duration-300 hover:pl-2 hover:border-l-2 hover:border-blue-400 hover:bg-blue-800/50 rounded p-1">
           This performance data reflects my systematic approach to trading futures markets, primarily NQ (Nasdaq) and MNQ (Micro Nasdaq) futures contracts.
         </p>
-        <p className="text-blue-100">
+        <p className="text-blue-100 transition-all duration-300 hover:pl-2 hover:border-l-2 hover:border-blue-400 hover:bg-blue-800/50 rounded p-1">
           The strategy employs technical analysis, volatility breakouts, and scalping techniques to identify high-probability trade setups across intraday timeframes.
         </p>
+        <div className="mt-4 pt-4 border-t border-blue-700 flex justify-between items-center">
+          <span className="text-blue-200 text-sm">Last updated: May 14, 2025</span>
+          <a href="/projects" className="text-blue-200 hover:text-white transition-colors inline-flex items-center group">
+            View System Architecture
+            <span className="ml-1 transition-transform duration-200 group-hover:translate-x-1">→</span>
+          </a>
+        </div>
       </div>
     </section>
   );

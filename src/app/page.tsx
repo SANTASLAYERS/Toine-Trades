@@ -1,15 +1,132 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+
+// Define types for performance data
+type PerformanceData = {
+  equity_curve: {
+    dates: string[];
+    values: number[];
+  };
+  metrics: {
+    pnl: number;
+    sharpe: number;
+    max_dd: number;
+    win_rate: number;
+  };
+  trades: Array<{
+    'Entry time': string;
+    'Exit time': string;
+    'Instrument': string;
+    'Market pos.': string;
+    'Qty': number;
+    'Entry price': number;
+    'Exit price': number;
+    'Profit': number;
+  }>;
+};
 
 export default function Home() {
+  const [perfMetrics, setPerfMetrics] = useState({
+    winRate: '53',
+    maxDrawdown: '8.54',
+    winLossRatio: '1.18',
+    profitFactor: '1.65',
+    sharpeRatio: '2.2'
+  });
+
+  // Add parallax scrolling effect
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const parallaxElements = document.querySelectorAll('.parallax-element');
+
+      parallaxElements.forEach((element, index) => {
+        // Different speeds for different elements
+        const speed = 0.2 + (index * 0.05);
+        const yPos = -(scrollTop * speed);
+        if (element instanceof HTMLElement) {
+          element.style.transform = `translateY(${yPos}px)`;
+        }
+      });
+    };
+
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll);
+
+    // Clean up event listener on component unmount
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Fetch performance data from JSON
+    fetch('/perf.json')
+      .then(res => res.json())
+      .then((data: PerformanceData) => {
+        // Calculate metrics from the data
+        const trades = data.trades;
+
+        // Calculate win rate
+        const winningTrades = trades.filter(t => t.Profit > 0);
+        const winRate = (winningTrades.length / trades.length) * 100;
+
+        // Calculate max drawdown with +15000 base capital adjustment
+        const baseCapital = 15000;
+        let peak = baseCapital;
+        let maxDrawdown = 0;
+        let runningTotal = baseCapital;
+
+        trades.forEach(trade => {
+          runningTotal += trade.Profit;
+          if (runningTotal > peak) {
+            peak = runningTotal;
+          }
+          const drawdown = peak > 0 ? ((peak - runningTotal) / peak) * 100 : 0;
+          if (drawdown > maxDrawdown) {
+            maxDrawdown = drawdown;
+          }
+        });
+
+        // Calculate win/loss ratio
+        const losingTrades = trades.filter(t => t.Profit < 0);
+        const avgWin = winningTrades.length > 0
+          ? winningTrades.reduce((sum, t) => sum + t.Profit, 0) / winningTrades.length
+          : 0;
+        const avgLoss = losingTrades.length > 0
+          ? losingTrades.reduce((sum, t) => sum + t.Profit, 0) / losingTrades.length
+          : 0;
+        const winLossRatio = avgLoss !== 0 ? Math.abs(avgWin / avgLoss) : 0;
+
+        // Calculate profit factor
+        const grossProfit = winningTrades.reduce((sum, t) => sum + t.Profit, 0);
+        const grossLoss = Math.abs(losingTrades.reduce((sum, t) => sum + t.Profit, 0));
+        const profitFactor = grossLoss > 0 ? grossProfit / grossLoss : 0;
+
+        // Update state with calculated metrics
+        setPerfMetrics({
+          winRate: winRate.toFixed(1),
+          maxDrawdown: maxDrawdown.toFixed(2),
+          winLossRatio: winLossRatio.toFixed(2),
+          profitFactor: profitFactor.toFixed(2),
+          sharpeRatio: '2.2' // Hardcoded to 2.2
+        });
+      })
+      .catch(err => {
+        console.error('Failed to load performance data:', err);
+        // Keep default values if fetch fails
+      });
+  }, []);
+
   return (
     <div className="flex flex-col space-y-10">
       {/* Hero section - project focus */}
       <section className="relative bg-black text-white rounded-lg overflow-hidden p-12">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900">
-          <div 
-               className="absolute inset-0 opacity-20"
+        <div id="animated-background" className="absolute inset-0">
+          <div
+               className="absolute inset-0 opacity-20 parallax-element"
                style={{
                  backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.15\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
                  backgroundSize: '30px 30px'
@@ -17,53 +134,61 @@ export default function Home() {
           ></div>
         </div>
 
+        {/* Moving shapes - very noticeable animation */}
+        <div className="absolute top-20 right-20 w-32 h-32 rounded-full bg-blue-600/20 blur-2xl" style={{animation: "hover-bounce 8s ease-in-out infinite"}}></div>
+        <div className="absolute bottom-20 left-20 w-24 h-24 rounded-full bg-indigo-600/20 blur-2xl" style={{animation: "hover-bounce 7s ease-in-out infinite", animationDelay: "0.5s"}}></div>
+        <div className="absolute top-1/3 left-1/4 w-16 h-16 rounded-full bg-purple-500/20 blur-xl" style={{animation: "hover-bounce 6s ease-in-out infinite", animationDelay: "1s"}}></div>
+
         <div className="relative max-w-3xl mx-auto">
-          <div className="inline-block px-2 py-1 mb-4 text-xs font-medium bg-blue-600 rounded">MID FREQUENCY TRADING SYSTEM</div>
-          <h1 className="text-5xl font-bold mb-4 tracking-tight">
+          <div className="inline-block px-2 py-1 mb-4 text-xs font-medium bg-blue-600 rounded parallax-element" style={{animation: "hover-bounce 12s ease-in-out infinite"}}>MID FREQUENCY TRADING SYSTEM</div>
+          <h1 className="text-5xl font-bold mb-4 tracking-tight parallax-element" style={{animation: "hover-bounce 15s ease-in-out infinite"}}>
             Mean Reversion <br />Algorithm
           </h1>
-          <p className="text-xl mb-6 leading-relaxed max-w-2xl">
+          <p className="text-xl mb-6 leading-relaxed max-w-2xl parallax-element">
             A production-grade trading system for micro e-mini futures that identifies temporary market dislocations using ML and level-2 data.
           </p>
-          <div className="inline-block mb-8 text-sm text-blue-300 bg-blue-950/50 px-3 py-1 rounded">
+          <div className="inline-block mb-8 text-sm text-blue-300 bg-blue-950/50 px-3 py-1 rounded parallax-element">
             <Link href="#about-me" className="hover:text-white transition-colors">
-              Antoine Pangas • Computer Science, U of M 2025 • Washington DC
+              Antoine Pangas • Computer Science, U of M Jan 2025 • Washington DC
             </Link>
           </div>
 
           {/* Key metrics */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 lg:gap-10 mb-8 text-blue-100 text-sm">
-            <div className="border-l-2 border-blue-400 pl-3">
-              <div className="font-bold text-2xl text-white">90%</div>
+            <div className="metrics-card border-l-2 border-blue-400 pl-3 transition-all duration-300 hover:bg-blue-800/30 hover:border-blue-300 hover:pl-4 rounded hover:shadow-inner cursor-pointer">
+              <div className="font-bold text-2xl text-white group-hover:text-blue-200">90%</div>
               <div>Trades under 5 min</div>
             </div>
-            <div className="border-l-2 border-blue-400 pl-3">
-              <div className="font-bold text-2xl text-white">2.3</div>
+            <div className="metrics-card border-l-2 border-blue-400 pl-3 transition-all duration-300 hover:bg-blue-800/30 hover:border-blue-300 hover:pl-4 rounded hover:shadow-inner cursor-pointer">
+              <div className="font-bold text-2xl text-white">2.2</div>
               <div>Sharpe Ratio</div>
             </div>
-            <div className="border-l-2 border-blue-400 pl-3">
-              <div className="font-bold text-2xl text-white">53%</div>
+            <div className="metrics-card border-l-2 border-blue-400 pl-3 transition-all duration-300 hover:bg-blue-800/30 hover:border-blue-300 hover:pl-4 rounded hover:shadow-inner cursor-pointer">
+              <div className="font-bold text-2xl text-white">{perfMetrics.winRate}%</div>
               <div>Win Rate</div>
             </div>
-            <div className="border-l-2 border-blue-400 pl-3">
-              <div className="font-bold text-2xl text-white">1.18</div>
+            <div className="metrics-card border-l-2 border-blue-400 pl-3 transition-all duration-300 hover:bg-blue-800/30 hover:border-blue-300 hover:pl-4 rounded hover:shadow-inner cursor-pointer">
+              <div className="font-bold text-2xl text-white">{perfMetrics.winLossRatio}</div>
               <div>Win/Loss Ratio</div>
             </div>
           </div>
           
           <div className="flex flex-wrap gap-4 mt-2">
-            <Link 
-              href="/projects" 
-              className="bg-white text-blue-900 hover:bg-blue-50 px-5 py-3 rounded-md font-medium transition-colors"
+            <Link
+              href="/projects"
+              className="bg-white text-blue-900 hover:bg-blue-50 px-5 py-3 rounded-md font-medium transition-all hover:scale-105 hover:shadow-lg"
             >
               System Architecture
             </Link>
-            <Link
-              href="/performance"
-              className="bg-blue-800 hover:bg-blue-700 border border-blue-700 px-5 py-3 rounded-md font-medium transition-colors"
-            >
-              Performance Metrics
-            </Link>
+            <div className="relative">
+              <div className="absolute inset-0 bg-blue-400 rounded-md opacity-10" style={{animation: "pulse 3s ease-in-out infinite"}}></div>
+              <Link
+                href="/performance"
+                className="relative bg-blue-800 hover:bg-blue-700 border border-blue-700 px-5 py-3 rounded-md font-medium transition-all hover:scale-105 hover:shadow-lg"
+              >
+                Performance Metrics
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -138,33 +263,36 @@ export default function Home() {
           </div>
           
           <div className="md:w-80 lg:w-96 flex-shrink-0">
-            <div className="bg-gray-50 rounded-lg p-5 border border-gray-100 shadow-sm h-full flex flex-col justify-between">
+            <div className="bg-gray-50 rounded-lg p-5 border border-gray-100 shadow-sm h-full flex flex-col justify-between transition-all duration-300 hover:shadow-md hover:bg-gray-50/90 hover:border-blue-100 group">
               <div>
-                <h3 className="text-lg font-semibold mb-4 text-gray-800">Technical Specifications</h3>
+                <h3 className="text-lg font-semibold mb-4 text-gray-800 group-hover:text-blue-800 transition-colors">Technical Specifications</h3>
                 <dl className="grid grid-cols-1 gap-3">
-                  <div>
-                    <dt className="text-sm font-medium text-blue-600 mb-1">Primary Markets</dt>
-                    <dd className="text-gray-800">MNQ, MES (Micro E-mini futures)</dd>
+                  <div className="transition-all duration-200 hover:bg-blue-50/50 p-2 hover:rounded">
+                    <dt className="text-sm font-medium text-blue-600 mb-1 group-hover:text-blue-700">Primary Markets</dt>
+                    <dd className="text-gray-800 group-hover:text-gray-900">MNQ, MES (Micro E-mini futures)</dd>
                   </div>
-                  <div>
-                    <dt className="text-sm font-medium text-blue-600 mb-1">Avg. Trade Duration</dt>
-                    <dd className="text-gray-800">2 minutes</dd>
+                  <div className="transition-all duration-200 hover:bg-blue-50/50 p-2 hover:rounded">
+                    <dt className="text-sm font-medium text-blue-600 mb-1 group-hover:text-blue-700">Avg. Trade Duration</dt>
+                    <dd className="text-gray-800 group-hover:text-gray-900">2 minutes</dd>
                   </div>
-                  <div>
-                    <dt className="text-sm font-medium text-blue-600 mb-1">Trade Frequency</dt>
-                    <dd className="text-gray-800">15-25 trades per day</dd>
+                  <div className="transition-all duration-200 hover:bg-blue-50/50 p-2 hover:rounded">
+                    <dt className="text-sm font-medium text-blue-600 mb-1 group-hover:text-blue-700">Trade Frequency</dt>
+                    <dd className="text-gray-800 group-hover:text-gray-900">15-25 trades per day</dd>
                   </div>
-                  <div>
-                    <dt className="text-sm font-medium text-blue-600 mb-1">Data Sources</dt>
-                    <dd className="text-gray-800">Level-2 order book data, technical indicators</dd>
+                  <div className="transition-all duration-200 hover:bg-blue-50/50 p-2 hover:rounded">
+                    <dt className="text-sm font-medium text-blue-600 mb-1 group-hover:text-blue-700">Data Sources</dt>
+                    <dd className="text-gray-800 group-hover:text-gray-900">Level-2 order book data, technical indicators</dd>
                   </div>
                 </dl>
               </div>
-              
-              <div className="mt-6 pt-4 border-t border-gray-200">
-                <Link href="/projects" className="text-blue-600 hover:text-blue-800 font-medium">
-                  View detailed architecture →
-                </Link>
+
+              <div className="mt-6 pt-4 border-t border-gray-200 group-hover:border-blue-100 transition-colors">
+                <div className="flex items-center justify-center sm:justify-start">
+                  <Link href="/projects" className="text-blue-600 hover:text-blue-800 font-medium group-hover:underline flex items-center">
+                    <span>View detailed architecture</span>
+                    <span className="inline-block ml-1 transition-transform group-hover:translate-x-1">→</span>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -176,33 +304,33 @@ export default function Home() {
         <h2 className="text-2xl font-bold mb-6 text-gray-800">Key System Features</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg border border-blue-200">
-            <h3 className="font-semibold text-lg mb-3 text-blue-900">Feature Engineering</h3>
+          <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg border border-blue-200 transition-all duration-300 hover:shadow-lg hover:shadow-blue-200/50 hover:scale-[1.02] hover:border-blue-300 cursor-pointer">
+            <h3 className="font-semibold text-lg mb-3 text-blue-900 transition duration-300 group-hover:text-blue-700">Feature Engineering</h3>
             <p className="text-gray-700 mb-3">Custom indicators derived from order book data to capture market microstructure patterns.</p>
             <ul className="text-gray-600 text-sm space-y-1">
-              <li>• Order book imbalance metrics</li>
-              <li>• Adaptive volatility calculations</li>
-              <li>• PCA-based state compression</li>
+              <li className="transition hover:translate-x-1 hover:text-blue-800">• Order book imbalance metrics</li>
+              <li className="transition hover:translate-x-1 hover:text-blue-800">• Adaptive volatility calculations</li>
+              <li className="transition hover:translate-x-1 hover:text-blue-800">• PCA-based state compression</li>
             </ul>
           </div>
-          
-          <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-lg border border-purple-200">
-            <h3 className="font-semibold text-lg mb-3 text-purple-900">Model Structure</h3>
+
+          <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-lg border border-purple-200 transition-all duration-300 hover:shadow-lg hover:shadow-purple-200/50 hover:scale-[1.02] hover:border-purple-300 cursor-pointer">
+            <h3 className="font-semibold text-lg mb-3 text-purple-900 transition duration-300 group-hover:text-purple-700">Model Structure</h3>
             <p className="text-gray-700 mb-3">Separate models for entry and exit decisions to optimize for different objectives.</p>
             <ul className="text-gray-600 text-sm space-y-1">
-              <li>• XGBoost entry classifier</li>
-              <li>• Custom loss function for exits</li>
-              <li>• Time-volatility balance optimization</li>
+              <li className="transition hover:translate-x-1 hover:text-purple-800">• XGBoost entry classifier</li>
+              <li className="transition hover:translate-x-1 hover:text-purple-800">• Custom loss function for exits</li>
+              <li className="transition hover:translate-x-1 hover:text-purple-800">• Time-volatility balance optimization</li>
             </ul>
           </div>
-          
-          <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-lg border border-green-200">
-            <h3 className="font-semibold text-lg mb-3 text-green-900">Risk Management</h3>
+
+          <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-lg border border-green-200 transition-all duration-300 hover:shadow-lg hover:shadow-green-200/50 hover:scale-[1.02] hover:border-green-300 cursor-pointer">
+            <h3 className="font-semibold text-lg mb-3 text-green-900 transition duration-300 group-hover:text-green-700">Risk Management</h3>
             <p className="text-gray-700 mb-3">Multi-layer risk controls to protect capital and optimize performance.</p>
             <ul className="text-gray-600 text-sm space-y-1">
-              <li>• Dynamic position sizing</li>
-              <li>• Adaptive stop-loss placement</li>
-              <li>• Drawdown-based system throttling</li>
+              <li className="transition hover:translate-x-1 hover:text-green-800">• Dynamic position sizing</li>
+              <li className="transition hover:translate-x-1 hover:text-green-800">• Adaptive stop-loss placement</li>
+              <li className="transition hover:translate-x-1 hover:text-green-800">• Drawdown-based system throttling</li>
             </ul>
           </div>
         </div>
@@ -231,7 +359,7 @@ export default function Home() {
           <div className="md:col-span-2">
             <div className="prose prose-invert max-w-none">
               <p className="text-lg leading-relaxed mb-4">
-                I'm a Computer Science student at the University of Michigan, graduating in 2025. My primary focus is on
+                I'm a Computer Science graduate from the University of Michigan, graduated in Jan 2025. My primary focus is on
                 algorithmic trading systems and financial machine learning.
               </p>
               <p className="leading-relaxed mb-4">
@@ -289,7 +417,7 @@ export default function Home() {
               <div>
                 <div className="font-medium text-white">University of Michigan</div>
                 <div className="text-sm text-blue-300">BSc in Computer Science</div>
-                <div className="text-sm text-blue-200">2021 - 2025</div>
+                <div className="text-sm text-blue-200">2021 - Jan 2025</div>
               </div>
             </div>
 
@@ -394,19 +522,19 @@ export default function Home() {
               <dl className="grid grid-cols-2 gap-4">
                 <div>
                   <dt className="text-xs text-gray-500">Sharpe Ratio</dt>
-                  <dd className="text-2xl font-bold text-blue-600">2.3</dd>
+                  <dd className="text-2xl font-bold text-blue-600">2.2</dd>
                 </div>
                 <div>
                   <dt className="text-xs text-gray-500">Win Rate</dt>
-                  <dd className="text-2xl font-bold text-blue-600">53%</dd>
-                </div>
-                <div>
-                  <dt className="text-xs text-gray-500">Max Drawdown</dt>
-                  <dd className="text-2xl font-bold text-blue-600">8.54%</dd>
+                  <dd className="text-2xl font-bold text-blue-600">{perfMetrics.winRate}%</dd>
                 </div>
                 <div>
                   <dt className="text-xs text-gray-500">Win/Loss Ratio</dt>
-                  <dd className="text-2xl font-bold text-blue-600">1.18</dd>
+                  <dd className="text-2xl font-bold text-blue-600">{perfMetrics.winLossRatio}</dd>
+                </div>
+                <div>
+                  <dt className="text-xs text-gray-500">Profit Factor</dt>
+                  <dd className="text-2xl font-bold text-blue-600">{perfMetrics.profitFactor}</dd>
                 </div>
               </dl>
               <div className="mt-3 text-right">
@@ -426,7 +554,7 @@ export default function Home() {
 if (typeof document !== 'undefined') {
   // Execute after component is mounted
   setTimeout(() => {
-    // Add blinking cursor to terminal effect
+    // Add blinking cursor to terminal effect and floating animations
     const style = document.createElement('style');
     style.textContent = `
       @keyframes blink {
@@ -439,13 +567,91 @@ if (typeof document !== 'undefined') {
         animation: blink 1s step-end infinite;
         margin-left: 2px;
       }
+
+      /* Smooth floating animation for metric cards */
+      @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-8px); }
+        100% { transform: translateY(0px); }
+      }
+
+      .float-1 {
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .float-2 {
+        animation: float 7s ease-in-out infinite;
+        animation-delay: 0.5s;
+      }
+
+      .float-3 {
+        animation: float 8s ease-in-out infinite;
+        animation-delay: 1s;
+      }
+
+      .float-4 {
+        animation: float 9s ease-in-out infinite;
+        animation-delay: 1.5s;
+      }
+
+      /* Animated rotating gradient background - more noticeable movement */
+      @keyframes gradientAnimation {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      #animated-background {
+        background: linear-gradient(-45deg, #1e3a8a, #1e40af, #3730a3, #2563eb);
+        background-size: 400% 400%;
+        animation: gradientAnimation 15s ease infinite;
+      }
+
+      /* Hovering elements animation */
+      @keyframes hover-bounce {
+        0%, 100% {
+          transform: translateY(0) translateX(0);
+        }
+        25% {
+          transform: translateY(-15px) translateX(5px);
+        }
+        75% {
+          transform: translateY(5px) translateX(-5px);
+        }
+      }
+
+      .hover-animation {
+        animation: hover-bounce 8s ease-in-out infinite;
+      }
     `;
     document.head.appendChild(style);
-    
+
     // Add cursor to the last text element
     const lastTextElement = document.querySelector('.typing-effect span:last-child');
     if (lastTextElement) {
       lastTextElement.classList.add('terminal-cursor');
     }
+
+    // Add floating animations to metric cards
+    const metricCards = document.querySelectorAll('.metrics-card');
+    metricCards.forEach((card, index) => {
+      card.classList.add(`float-${index + 1}`);
+    });
+
+    // Add hovering animation to specific elements
+    const hoverElements = document.querySelectorAll('.hover-animation');
+    hoverElements.forEach(el => {
+      // Random delay for more natural movement
+      const delay = Math.random() * 2;
+      if (el instanceof HTMLElement) {
+        el.style.animationDelay = `${delay}s`;
+      }
+    });
   }, 100);
 }

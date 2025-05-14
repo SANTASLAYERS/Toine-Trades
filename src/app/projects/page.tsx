@@ -50,8 +50,8 @@ export default function ProjectsPage() {
             resolve within seconds to minutes.
           </p>
           
-          <blockquote className="border-l-4 border-indigo-500 pl-4 italic text-blue-300 my-6 bg-gray-800/30 p-3 rounded-r">
-            Over 90% of trades complete within 10 seconds to 5 minutes, requiring a system architecture 
+          <blockquote className="border-l-4 border-indigo-500 pl-4 italic text-blue-300 my-6 bg-gray-800/30 p-3 rounded-r transition-all duration-300 hover:border-l-8 hover:bg-indigo-900/20 hover:shadow-inner hover:pl-6">
+            Over 90% of trades complete within 10 seconds to 5 minutes, requiring a system architecture
             optimized for low-latency decision making and execution.
           </blockquote>
         </section>
@@ -63,23 +63,29 @@ export default function ProjectsPage() {
           </h2>
           
           <div className="mb-8">
-            <h3 className="text-xl font-bold mb-3 text-blue-300">Feature Pipeline</h3>
+            <h3 className="text-xl font-bold mb-3 text-blue-300 transition-all duration-300 group hover:text-blue-200">
+              Feature Pipeline
+              <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400 text-sm">🔄</span>
+            </h3>
             <p className="text-gray-300 mb-4">
               The feature pipeline ingests real-time market data, transforms it into predictive signals, 
               and delivers these to the model stack with minimal latency.
             </p>
             <ul className="list-disc pl-6 space-y-2 text-gray-300">
-              <li><strong className="text-blue-200">Level-2 Data Processing:</strong> Real-time analysis of orderbook imbalance, 
+              <li className="transition-all duration-200 hover:translate-x-2 hover:text-blue-200 rounded p-1 hover:bg-blue-900/20"><strong className="text-blue-200">Level-2 Data Processing:</strong> Real-time analysis of orderbook imbalance,
               spread volatility, and depth distribution patterns</li>
-              <li><strong className="text-blue-200">Statistical Feature Generation:</strong> Calculation of adaptive z-scores, 
+              <li className="transition-all duration-200 hover:translate-x-2 hover:text-blue-200 rounded p-1 hover:bg-blue-900/20"><strong className="text-blue-200">Statistical Feature Generation:</strong> Calculation of adaptive z-scores,
               rolling volatility metrics, and momentum oscillators calibrated to short timeframes</li>
-              <li><strong className="text-blue-200">Dimensional Reduction:</strong> PCA-based compression of order book state vectors 
+              <li className="transition-all duration-200 hover:translate-x-2 hover:text-blue-200 rounded p-1 hover:bg-blue-900/20"><strong className="text-blue-200">Dimensional Reduction:</strong> PCA-based compression of order book state vectors
               to capture essential microstructure dynamics while reducing noise</li>
             </ul>
           </div>
           
           <div className="mb-8">
-            <h3 className="text-xl font-bold mb-3 text-blue-300">Model Architecture</h3>
+            <h3 className="text-xl font-bold mb-3 text-blue-300 transition-all duration-300 group hover:text-blue-200">
+              Model Architecture
+              <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400 text-sm">🧠</span>
+            </h3>
             <p className="text-gray-300 mb-4">
               The system employs a dual-model approach, separating entry signal generation from exit timing 
               optimization to achieve greater specialization.
@@ -220,12 +226,12 @@ export default function ProjectsPage() {
             <div>
               <div className="flex justify-between mb-1">
                 <span className="text-blue-200 font-medium">Model Maintenance</span>
-                <span className="text-gray-400 text-xs">35% complete</span>
+                <span className="text-gray-400 text-xs">70% complete</span>
               </div>
               <div className="w-full bg-gray-700 rounded-full h-2">
-                <div className="bg-green-500 h-2 rounded-full" style={{width: "35%"}}></div>
+                <div className="bg-green-500 h-2 rounded-full" style={{width: "70%"}}></div>
               </div>
-              <p className="text-gray-400 text-sm mt-1">Develop automated retraining pipeline with drift detection</p>
+              <p className="text-gray-400 text-sm mt-1">Develop automated retraining pipeline</p>
             </div>
             
             <div>

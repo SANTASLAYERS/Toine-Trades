@@ -10,25 +10,28 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   
-  // Image optimization settings
+  // Image settings
   images: {
-    unoptimized: true, // For static exports
+    unoptimized: true,
   },
   
-  // Debug settings
-  experimental: {
-    logging: 'verbose',
-    // Adjust settings to be more compatible with Vercel deployment
-    serverComponentsExternalPackages: ['plotly.js'],
-  },
+  // Set this for Vercel compatibility
+  output: 'standalone',
   
   // Production settings
-  productionBrowserSourceMaps: true,
+  productionBrowserSourceMaps: false,
   
-  // Compiler options
+  // Simple compiler options
   compiler: {
-    reactRemoveProperties: { properties: ['^data-test$'] },
+    // Remove data attributes
+    reactRemoveProperties: true,
   },
+  
+  // Server packages to be externalized
+  serverExternalPackages: ['plotly.js'],
+
+  // Turn off certain optimizations that might cause issues
+  poweredByHeader: false,
 };
 
 module.exports = nextConfig;

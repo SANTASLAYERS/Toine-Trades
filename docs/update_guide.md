@@ -4,7 +4,6 @@ This document outlines the process for updating trading performance data on the 
 
 ## Prerequisites
 
-- Python 3.7+ installed on your system
 - NinjaTrader software with access to trade history
 - Git installed and configured with repository access
 
@@ -16,35 +15,23 @@ This document outlines the process for updating trading performance data on the 
 2. Navigate to **Control Center** > **Trade Performance** > **Executions**
 3. Set desired date range for the export
 4. Click **Export** button (CSV format)
-5. Save as `nt_export.csv` in the project root directory
+5. Save the file with a name starting with "NinjaTrader" (e.g., `NinjaTrader Grid 2025-05-13.csv`) in the project root directory
 
-### 2. Convert CSV to JSON
+### 2. Push the CSV File to the Repository
 
-Run the Python converter script to transform the NinjaTrader CSV into the required JSON format:
-
-```bash
-# From the project root directory
-python scripts/nt2json.py nt_export.csv src/data/perf.json
-```
-
-This script will:
-- Read the CSV file
-- Clean and transform the data
-- Calculate performance metrics (P&L, Sharpe ratio, max drawdown, win rate)
-- Generate the equity curve data
-- Save everything in the required JSON format
-
-### 3. Commit and Push Changes
-
-After generating the updated JSON file, commit and push the changes to the repository:
+After exporting the CSV file, commit and push it to the repository:
 
 ```bash
-git add src/data/perf.json
+git add "NinjaTrader*.csv"
 git commit -m "perf update $(date +%F)"
 git push origin main
 ```
 
-### 4. Verify Deployment
+The website will automatically load the most recent NinjaTrader CSV file when visitors access the performance page.
+
+> **Note:** The old method using the Python converter (nt2json.py) is no longer required as the application now reads directly from the CSV file.
+
+### 3. Verify Deployment
 
 The Vercel deployment will automatically trigger when changes are pushed to the main branch. To verify:
 

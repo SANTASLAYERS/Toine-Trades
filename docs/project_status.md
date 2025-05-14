@@ -107,9 +107,19 @@
    - Fixed unescaped apostrophe with `&apos;` entity reference
    - Added proper TypeScript types to replace `any` in the performance page
    - Created `.eslintrc.json` to override problematic rules
-4. ✅ These changes ensure that:
+4. ✅ Updated Performance page to use NinjaTrader CSV directly:
+   - Added API route to read NinjaTrader CSV files from the project root
+   - Added CSV parsing with PapaParse
+   - Implemented real-time calculation of metrics from CSV data
+   - Created dynamic sorting and filtering capabilities for trade data
+5. ✅ Added TypeScript declarations for third-party libraries:
+   - Created type declarations for `react-plotly.js`
+   - Updated tsconfig.json to include custom type definitions
+   - Fixed TypeScript build errors related to missing types
+6. ✅ These changes ensure that:
    - React hooks like `useState` work properly on client components
    - MDX content renders correctly throughout the application
    - Build process completes without ESLint or TypeScript errors
+   - Performance data is automatically loaded from the most recent NinjaTrader CSV file
 
 The foundation of the project is complete and ready for personalization with real content and deployment to production. All critical build issues have been resolved.

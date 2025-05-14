@@ -91,16 +91,15 @@ pnpm build
 The website displays performance data from real trading results. To update this data:
 
 1. Export trade data from NinjaTrader as CSV
-2. Run the conversion script:
-   ```bash
-   python scripts/nt2json.py nt_export.csv src/data/perf.json
-   ```
+2. Save the file with a name starting with "NinjaTrader" (e.g., `NinjaTrader Grid 2025-05-13.csv`) in the project root directory
 3. Commit and push changes:
    ```bash
-   git add src/data/perf.json
+   git add "NinjaTrader*.csv"
    git commit -m "perf update $(date +%F)"
    git push origin main
    ```
+
+The website will automatically load the most recent NinjaTrader CSV file when visitors access the performance page.
 
 For detailed instructions, see [docs/update_guide.md](docs/update_guide.md).
 

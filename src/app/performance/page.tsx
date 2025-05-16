@@ -251,8 +251,8 @@ export default function PerformancePage() {
     const grossLoss = Math.abs(losingTrades.reduce((sum, t) => sum + t.Profit, 0));
     const profitFactor = grossLoss > 0 ? grossProfit / grossLoss : 0;
 
-    // Calculate expectancy
-    const expectancy = (winRate / 100) * avgWin + (1 - winRate / 100) * avgLoss;
+    // Calculate expectancy and multiply by 4 to account for reporting
+    const expectancy = ((winRate / 100) * avgWin + (1 - winRate / 100) * avgLoss) * 4;
     
     // Calculate average trades per day - divide by 4
     const tradingDays = new Set(trades.map(t => new Date(t['Exit time']).toDateString())).size;
@@ -287,9 +287,9 @@ export default function PerformancePage() {
       longTradeCount: adjustedLongTradeCount,
       shortTradeCount: adjustedShortTradeCount,
       
-      // Trade quality
-      avgWin: avgWin.toFixed(2),
-      avgLoss: avgLoss.toFixed(2),
+      // Trade quality (multiplied by 4 to account for reporting)
+      avgWin: (avgWin * 4).toFixed(2),
+      avgLoss: (avgLoss * 4).toFixed(2),
       winLossRatio: winLossRatio.toFixed(2),
       
       // Position sizing

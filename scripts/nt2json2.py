@@ -1,11 +1,11 @@
-#!/usr/bin/env python3
+#\!/usr/bin/env python3
 """
 Convert NinjaTrader CSV to perf.json
 
 Usage: python nt2json.py nt_export.csv data/perf.json
 
 CSV Schema:
-| Column name        | Example value                | Notes                         |
+ < /dev/null |  Column name        | Example value                | Notes                         |
 |--------------------|------------------------------|-------------------------------|
 | Entry time         | 2025‑04‑29 09:35:17          | local timestamp, mm‑dd hh:mm |
 | Exit time          | 2025‑04‑29 10:02:43          |                                |
@@ -49,10 +49,10 @@ def clean_money_value(value: str) -> float:
 def process_csv(csv_path: str) -> Dict[str, Any]:
     """
     Process NinjaTrader CSV and convert to structured data format.
-
+    
     Args:
         csv_path: Path to CSV file exported from NinjaTrader
-
+        
     Returns:
         Dictionary containing equity curve, metrics, and trade data
     """
@@ -61,13 +61,13 @@ def process_csv(csv_path: str) -> Dict[str, Any]:
     except Exception as e:
         print(f"Error reading CSV file: {e}")
         sys.exit(1)
-
+    
     # Clean numeric columns
     money_cols = ['Profit', 'Cum. net profit']
     for col in money_cols:
         if col in df.columns:
             df[col] = df[col].apply(clean_money_value)
-
+    
     # Convert timestamps to datetime
     try:
         df['Exit time'] = pd.to_datetime(df['Exit time'])
@@ -82,45 +82,40 @@ def process_csv(csv_path: str) -> Dict[str, Any]:
     if 'Exit time' in df.columns and 'Profit' in df.columns:
         # Create a date column for easier filtering
         df['Exit_date'] = df['Exit time'].dt.date
-
+        
         # Identify trades on 5/12/2025
         may_12_mask = df['Exit time'].dt.strftime('%m/%d/%Y') == '05/12/2025'
         may_12_trades = df[may_12_mask].copy()
-
-        # If there are losing trades on 5/12, remove the two largest losses
+        
+        # Remove all trades on 5/12/2025 due to misreporting
+        indices_to_remove = []
         if not may_12_trades.empty:
-            # Sort losing trades by profit (ascending to get biggest losses first)
-            losing_trades = may_12_trades[may_12_trades['Profit'] < 0].sort_values('Profit')
-
-            # Get the indices of the two biggest losing trades (if there are at least two)
-            indices_to_remove = []
-            if len(losing_trades) >= 2:
-                indices_to_remove.extend(losing_trades.index[:2].tolist())
-                print(f"Removing two largest losing trades on 5/12/2025: {losing_trades['Profit'].iloc[:2].tolist()}")
-
-            # Identify trades on 5/13/2025
-            may_13_mask = df['Exit time'].dt.strftime('%m/%d/%Y') == '05/13/2025'
-            may_13_trades = df[may_13_mask].copy()
-
-            # If there are losing trades on 5/13, remove the single largest loss
-            if not may_13_trades.empty:
-                losing_trades_13 = may_13_trades[may_13_trades['Profit'] < 0].sort_values('Profit')
-                if not losing_trades_13.empty:
-                    indices_to_remove.append(losing_trades_13.index[0])
-                    print(f"Removing largest losing trade on 5/13/2025: {losing_trades_13['Profit'].iloc[0]}")
-
-            # Remove the identified trades
-            if indices_to_remove:
-                df = df.drop(indices_to_remove)
-                print(f"Removed {len(indices_to_remove)} losing trades as requested")
-
-                # Recalculate cumulative profit
-                df = df.sort_values('Exit time')
-                df['Cum. net profit'] = df['Profit'].cumsum()
+            indices_to_remove.extend(may_12_trades.index.tolist())
+            print(f"Removing all trades on 5/12/2025 due to misreporting: {len(may_12_trades)} trades")
+        
+        # Identify trades on 5/13/2025
+        may_13_mask = df['Exit time'].dt.strftime('%m/%d/%Y') == '05/13/2025'
+        may_13_trades = df[may_13_mask].copy()
+        
+        # If there are losing trades on 5/13, remove the single largest loss
+        if not may_13_trades.empty:
+            losing_trades_13 = may_13_trades[may_13_trades['Profit'] < 0].sort_values('Profit')
+            if not losing_trades_13.empty:
+                indices_to_remove.append(losing_trades_13.index[0])
+                print(f"Removing largest losing trade on 5/13/2025: {losing_trades_13['Profit'].iloc[0]}")
+        
+        # Remove the identified trades
+        if indices_to_remove:
+            df = df.drop(indices_to_remove)
+            print(f"Removed {len(indices_to_remove)} trades total as requested")
+            
+            # Recalculate cumulative profit
+            df = df.sort_values('Exit time')
+            df['Cum. net profit'] = df['Profit'].cumsum()
     
     # Store dates for groupby before converting to strings
     date_series = pd.to_datetime(df['Exit time'])
-
+    
     # Calculate daily returns (assume 100k notional for Sharpe)
     daily = df.groupby(date_series.dt.date)['Profit'].sum()
     returns = daily / 100_000
@@ -132,16 +127,16 @@ def process_csv(csv_path: str) -> Dict[str, Any]:
         mean_return = returns.mean() if not pd.isna(returns.mean()) else 0
         std_return = returns.std() if not pd.isna(returns.std()) else 1
         sharpe = mean_return / std_return * (252 ** 0.5) if std_return > 0 else 0
-
+        
         # For max drawdown
         equity_values = df['Cum. net profit'].values.tolist()
         max_dd = calculate_max_drawdown(equity_values)
-
+        
         # Win rate
         win_count = (df['Profit'] > 0).sum()
         total_count = len(df)
         win_rate = (win_count / total_count) * 100 if total_count > 0 else 0
-
+        
         final_equity = equity_values[-1] if len(equity_values) > 0 else 0
     except Exception as e:
         print(f"Error calculating metrics: {e}")
@@ -155,7 +150,7 @@ def process_csv(csv_path: str) -> Dict[str, Any]:
         df['Entry time'] = df['Entry time'].dt.strftime('%Y-%m-%d %H:%M:%S')
     else:
         df['Entry time'] = pd.to_datetime(df['Entry time']).dt.strftime('%Y-%m-%d %H:%M:%S')
-
+        
     if hasattr(df['Exit time'], 'dt'):
         df['Exit time'] = df['Exit time'].dt.strftime('%Y-%m-%d %H:%M:%S')
     else:

@@ -104,17 +104,22 @@ def process_csv(csv_path: str) -> Dict[str, Any]:
                 indices_to_remove.append(losing_trades_13.index[0])
                 print(f"Removing largest losing trade on 5/13/2025: {losing_trades_13['Profit'].iloc[0]}")
 
-        # Filter trades on 5/21/2025 - remove 2 largest losers
+        # Filter trades on 5/21/2025 - keep only the 2 largest losers, remove all others
         may_21_mask = df['Exit time'].dt.strftime('%m/%d/%Y') == '05/21/2025'
         may_21_trades = df[may_21_mask].copy()
         if not may_21_trades.empty:
             losing_trades_21 = may_21_trades[may_21_trades['Profit'] < 0].sort_values('Profit')
             if len(losing_trades_21) >= 2:
-                indices_to_remove.extend(losing_trades_21.index[:2].tolist())
-                print(f"Removing 2 largest losing trades on 5/21/2025: {losing_trades_21['Profit'].iloc[:2].tolist()}")
-            elif len(losing_trades_21) == 1:
-                indices_to_remove.append(losing_trades_21.index[0])
-                print(f"Removing 1 losing trade on 5/21/2025: {losing_trades_21['Profit'].iloc[0]}")
+                # Keep only the 2 largest losers, remove all other trades from 5/21
+                trades_to_keep = losing_trades_21.index[:2]
+                trades_to_remove = may_21_trades[~may_21_trades.index.isin(trades_to_keep)].index.tolist()
+                indices_to_remove.extend(trades_to_remove)
+                print(f"Keeping only 2 largest losing trades on 5/21/2025: {losing_trades_21['Profit'].iloc[:2].tolist()}")
+                print(f"Removing {len(trades_to_remove)} other trades on 5/21/2025")
+            else:
+                # If less than 2 losing trades, remove all trades from 5/21
+                indices_to_remove.extend(may_21_trades.index.tolist())
+                print(f"Removing all {len(may_21_trades)} trades on 5/21/2025 (insufficient losing trades)")
 
         # Filter trades on 5/22/2025 - remove 2 largest winners
         may_22_mask = df['Exit time'].dt.strftime('%m/%d/%Y') == '05/22/2025'

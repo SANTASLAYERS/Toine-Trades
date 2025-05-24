@@ -981,7 +981,6 @@
       "2025-05-23 11:06:28",
       "2025-05-23 11:10:08",
       "2025-05-23 11:10:08",
-      "2025-05-23 13:06:06",
       "2025-05-23 14:47:12"
     ],
     "values": [
@@ -1580,7 +1579,7 @@
       7019.0,
       7057.0,
       7095.0,
-      7174.5,
+      7222.0,
       7301.5,
       7308.0,
       7398.0,
@@ -1735,7 +1734,7 @@
       7588.5,
       7658.5,
       7828.5,
-      7863.5,
+      7858.5,
       7893.5,
       7803.5,
       7713.5,
@@ -1751,7 +1750,7 @@
       8013.5,
       8298.5,
       8588.5,
-      8518.5,
+      8587.5,
       8517.5,
       9106.5,
       8968.0,
@@ -1763,10 +1762,10 @@
       8287.0,
       8073.5,
       7941.0,
-      7874.0,
+      7807.0,
       7740.0,
       7475.0,
-      7329.0,
+      7401.5,
       7255.5,
       6935.5,
       6815.5,
@@ -1810,7 +1809,7 @@
       9025.0,
       9135.0,
       9147.5,
-      9382.5,
+      9607.5,
       9842.5,
       9742.5,
       9582.5,
@@ -1921,7 +1920,7 @@
       12750.0,
       12440.0,
       12130.0,
-      11820.0,
+      11825.0,
       11515.0,
       11125.0,
       10545.0,
@@ -1935,7 +1934,7 @@
       10635.0,
       10530.0,
       10430.0,
-      10330.0,
+      10325.0,
       10225.0,
       9835.0,
       9445.0,
@@ -1960,20 +1959,19 @@
       9985.0,
       9880.0,
       9865.0,
-      9220.0,
+      9290.0,
       8645.0,
       9930.0,
-      10020.0,
+      10290.0,
       10380.0,
-      8205.0,
-      7900.0
+      10075.0
     ]
   },
   "metrics": {
-    "pnl": 7900.0,
-    "sharpe": 7.514295086728913,
+    "pnl": 10075.0,
+    "sharpe": 12.29450153976789,
     "max_dd": 55.33208606173995,
-    "win_rate": 52.443991853360494
+    "win_rate": 52.49745158002038
   },
   "trades": [
     {
@@ -7927,16 +7925,6 @@
       "Profit": 38.0
     },
     {
-      "Entry time": "2025-05-16 10:06:03",
-      "Exit time": "2025-05-16 10:34:19",
-      "Instrument": "MNQ JUN25",
-      "Market pos.": "Short",
-      "Qty": 1,
-      "Entry price": 21421.75,
-      "Exit price": 21382.0,
-      "Profit": 79.5
-    },
-    {
       "Entry time": "2025-05-16 10:18:10",
       "Exit time": "2025-05-16 10:34:19",
       "Instrument": "MNQ JUN25",
@@ -7945,6 +7933,16 @@
       "Entry price": 21445.5,
       "Exit price": 21382.0,
       "Profit": 127.0
+    },
+    {
+      "Entry time": "2025-05-16 10:06:03",
+      "Exit time": "2025-05-16 10:34:19",
+      "Instrument": "MNQ JUN25",
+      "Market pos.": "Short",
+      "Qty": 1,
+      "Entry price": 21421.75,
+      "Exit price": 21382.0,
+      "Profit": 79.5
     },
     {
       "Entry time": "2025-05-16 10:41:46",
@@ -9482,9 +9480,9 @@
       "Instrument": "NQ JUN25",
       "Market pos.": "Long",
       "Qty": 1,
-      "Entry price": 21130.25,
+      "Entry price": 21130.5,
       "Exit price": 21132.0,
-      "Profit": 35.0
+      "Profit": 30.0
     },
     {
       "Entry time": "2025-05-22 09:34:13",
@@ -9492,9 +9490,9 @@
       "Instrument": "NQ JUN25",
       "Market pos.": "Long",
       "Qty": 1,
-      "Entry price": 21130.5,
+      "Entry price": 21130.25,
       "Exit price": 21132.0,
-      "Profit": 30.0
+      "Profit": 35.0
     },
     {
       "Entry time": "2025-05-22 09:34:39",
@@ -9637,16 +9635,6 @@
       "Profit": 290.0
     },
     {
-      "Entry time": "2025-05-22 09:44:05",
-      "Exit time": "2025-05-22 09:50:56",
-      "Instrument": "MNQ JUN25",
-      "Market pos.": "Short",
-      "Qty": 1,
-      "Entry price": 21167.25,
-      "Exit price": 21202.25,
-      "Profit": -70.0
-    },
-    {
       "Entry time": "2025-05-22 09:50:55",
       "Exit time": "2025-05-22 09:50:56",
       "Instrument": "MNQ JUN25",
@@ -9655,6 +9643,16 @@
       "Entry price": 21201.75,
       "Exit price": 21202.25,
       "Profit": -1.0
+    },
+    {
+      "Entry time": "2025-05-22 09:44:05",
+      "Exit time": "2025-05-22 09:50:56",
+      "Instrument": "MNQ JUN25",
+      "Market pos.": "Short",
+      "Qty": 1,
+      "Entry price": 21167.25,
+      "Exit price": 21202.25,
+      "Profit": -70.0
     },
     {
       "Entry time": "2025-05-21 11:53:25",
@@ -9757,16 +9755,6 @@
       "Profit": -132.5
     },
     {
-      "Entry time": "2025-05-22 09:57:26",
-      "Exit time": "2025-05-22 10:01:22",
-      "Instrument": "MNQ JUN25",
-      "Market pos.": "Short",
-      "Qty": 1,
-      "Entry price": 21270.5,
-      "Exit price": 21304.0,
-      "Profit": -67.0
-    },
-    {
       "Entry time": "2025-05-22 09:54:37",
       "Exit time": "2025-05-22 10:01:22",
       "Instrument": "MNQ JUN25",
@@ -9775,6 +9763,16 @@
       "Entry price": 21237.0,
       "Exit price": 21304.0,
       "Profit": -134.0
+    },
+    {
+      "Entry time": "2025-05-22 09:57:26",
+      "Exit time": "2025-05-22 10:01:22",
+      "Instrument": "MNQ JUN25",
+      "Market pos.": "Short",
+      "Qty": 1,
+      "Entry price": 21270.5,
+      "Exit price": 21304.0,
+      "Profit": -67.0
     },
     {
       "Entry time": "2025-05-22 10:02:41",
@@ -9787,16 +9785,6 @@
       "Profit": -265.0
     },
     {
-      "Entry time": "2025-05-22 09:56:09",
-      "Exit time": "2025-05-22 10:03:46",
-      "Instrument": "MNQ JUN25",
-      "Market pos.": "Short",
-      "Qty": 1,
-      "Entry price": 21241.5,
-      "Exit price": 21314.5,
-      "Profit": -146.0
-    },
-    {
       "Entry time": "2025-05-22 09:57:26",
       "Exit time": "2025-05-22 10:03:46",
       "Instrument": "MNQ JUN25",
@@ -9805,6 +9793,16 @@
       "Entry price": 21277.75,
       "Exit price": 21314.5,
       "Profit": -73.5
+    },
+    {
+      "Entry time": "2025-05-22 09:56:09",
+      "Exit time": "2025-05-22 10:03:46",
+      "Instrument": "MNQ JUN25",
+      "Market pos.": "Short",
+      "Qty": 1,
+      "Entry price": 21241.5,
+      "Exit price": 21314.5,
+      "Profit": -146.0
     },
     {
       "Entry time": "2025-05-22 10:04:16",
@@ -10227,16 +10225,6 @@
       "Profit": 12.5
     },
     {
-      "Entry time": "2025-05-22 11:06:40",
-      "Exit time": "2025-05-22 11:07:26",
-      "Instrument": "NQ JUN25",
-      "Market pos.": "Long",
-      "Qty": 1,
-      "Entry price": 21237.25,
-      "Exit price": 21249.0,
-      "Profit": 235.0
-    },
-    {
       "Entry time": "2025-05-22 11:07:08",
       "Exit time": "2025-05-22 11:07:26",
       "Instrument": "NQ JUN25",
@@ -10245,6 +10233,16 @@
       "Entry price": 21226.25,
       "Exit price": 21249.25,
       "Profit": 460.0
+    },
+    {
+      "Entry time": "2025-05-22 11:06:40",
+      "Exit time": "2025-05-22 11:07:26",
+      "Instrument": "NQ JUN25",
+      "Market pos.": "Long",
+      "Qty": 1,
+      "Entry price": 21237.25,
+      "Exit price": 21249.0,
+      "Profit": 235.0
     },
     {
       "Entry time": "2025-05-22 11:08:53",
@@ -11343,8 +11341,8 @@
       "Market pos.": "Short",
       "Qty": 1,
       "Entry price": 20921.25,
-      "Exit price": 20936.75,
-      "Profit": -310.0
+      "Exit price": 20936.5,
+      "Profit": -305.0
     },
     {
       "Entry time": "2025-05-23 10:22:07",
@@ -11353,8 +11351,8 @@
       "Market pos.": "Short",
       "Qty": 1,
       "Entry price": 20921.25,
-      "Exit price": 20936.5,
-      "Profit": -305.0
+      "Exit price": 20936.75,
+      "Profit": -310.0
     },
     {
       "Entry time": "2025-05-23 10:22:40",
@@ -11483,8 +11481,8 @@
       "Market pos.": "Long",
       "Qty": 1,
       "Entry price": 20950.0,
-      "Exit price": 20945.0,
-      "Profit": -100.0
+      "Exit price": 20944.75,
+      "Profit": -105.0
     },
     {
       "Entry time": "2025-05-23 10:28:06",
@@ -11493,8 +11491,8 @@
       "Market pos.": "Long",
       "Qty": 1,
       "Entry price": 20950.0,
-      "Exit price": 20944.75,
-      "Profit": -105.0
+      "Exit price": 20945.0,
+      "Profit": -100.0
     },
     {
       "Entry time": "2025-05-23 10:31:34",
@@ -11727,16 +11725,6 @@
       "Profit": -15.0
     },
     {
-      "Entry time": "2025-05-23 10:59:14",
-      "Exit time": "2025-05-23 11:04:20",
-      "Instrument": "NQ JUN25",
-      "Market pos.": "Short",
-      "Qty": 1,
-      "Entry price": 20916.75,
-      "Exit price": 20949.0,
-      "Profit": -645.0
-    },
-    {
       "Entry time": "2025-05-23 11:02:23",
       "Exit time": "2025-05-23 11:04:20",
       "Instrument": "NQ JUN25",
@@ -11745,6 +11733,16 @@
       "Entry price": 20920.25,
       "Exit price": 20949.0,
       "Profit": -575.0
+    },
+    {
+      "Entry time": "2025-05-23 10:59:14",
+      "Exit time": "2025-05-23 11:04:20",
+      "Instrument": "NQ JUN25",
+      "Market pos.": "Short",
+      "Qty": 1,
+      "Entry price": 20916.75,
+      "Exit price": 20949.0,
+      "Profit": -645.0
     },
     {
       "Entry time": "2025-05-23 10:44:07",
@@ -11757,16 +11755,6 @@
       "Profit": 1285.0
     },
     {
-      "Entry time": "2025-05-23 11:03:53",
-      "Exit time": "2025-05-23 11:10:08",
-      "Instrument": "NQ JUN25",
-      "Market pos.": "Short",
-      "Qty": 1,
-      "Entry price": 20936.25,
-      "Exit price": 20931.75,
-      "Profit": 90.0
-    },
-    {
       "Entry time": "2025-05-23 11:04:19",
       "Exit time": "2025-05-23 11:10:08",
       "Instrument": "NQ JUN25",
@@ -11777,14 +11765,14 @@
       "Profit": 360.0
     },
     {
-      "Entry time": "2025-05-23 11:09:00",
-      "Exit time": "2025-05-23 13:06:06",
+      "Entry time": "2025-05-23 11:03:53",
+      "Exit time": "2025-05-23 11:10:08",
       "Instrument": "NQ JUN25",
       "Market pos.": "Short",
       "Qty": 1,
-      "Entry price": 20906.5,
-      "Exit price": 21015.25,
-      "Profit": -2175.0
+      "Entry price": 20936.25,
+      "Exit price": 20931.75,
+      "Profit": 90.0
     },
     {
       "Entry time": "2025-05-23 13:06:00",

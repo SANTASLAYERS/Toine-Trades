@@ -396,11 +396,8 @@ export default function PerformancePage() {
               title: '',
               showgrid: false,
               zeroline: false,
-              // Extend the range slightly to show the full projected line
-              range: [
-                null, // auto for start date
-                new Date(new Date().toISOString().split('T')[0] + ' 23:59').getTime() // end of today
-              ]
+              // Use null for both to allow auto-scaling when reset button is clicked
+              range: [null, null]
             },
             yaxis: {
               title: 'P&L ($)',
@@ -425,11 +422,11 @@ export default function PerformancePage() {
             hovermode: false
           }}
           style={{ width: '100%', height: '100%' }}
-          config={{ 
+          config={{
             displayModeBar: true,
             displaylogo: false,
             responsive: true,
-            modeBarButtonsToRemove: ['lasso2d', 'select2d', 'autoScale2d']
+            modeBarButtonsToRemove: ['lasso2d', 'select2d']
           }}
         />
       </div>

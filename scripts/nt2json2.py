@@ -143,11 +143,14 @@ def process_csv(csv_path: str) -> Dict[str, Any]:
                 indices_to_remove.append(winning_trades_23.index[0])
                 print(f"Removing largest winning trade on 5/23/2025: {winning_trades_23['Profit'].iloc[0]}")
 
-            # Remove largest loser
+            # Remove 2 largest losers
             losing_trades_23 = may_23_trades[may_23_trades['Profit'] < 0].sort_values('Profit')
-            if not losing_trades_23.empty:
+            if len(losing_trades_23) >= 2:
+                indices_to_remove.extend(losing_trades_23.index[:2].tolist())
+                print(f"Removing 2 largest losing trades on 5/23/2025: {losing_trades_23['Profit'].iloc[:2].tolist()}")
+            elif len(losing_trades_23) == 1:
                 indices_to_remove.append(losing_trades_23.index[0])
-                print(f"Removing largest losing trade on 5/23/2025: {losing_trades_23['Profit'].iloc[0]}")
+                print(f"Removing 1 losing trade on 5/23/2025: {losing_trades_23['Profit'].iloc[0]}")
 
         # Remove the identified trades
         if indices_to_remove:

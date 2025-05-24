@@ -103,7 +103,47 @@ def process_csv(csv_path: str) -> Dict[str, Any]:
             if not losing_trades_13.empty:
                 indices_to_remove.append(losing_trades_13.index[0])
                 print(f"Removing largest losing trade on 5/13/2025: {losing_trades_13['Profit'].iloc[0]}")
-        
+
+        # Filter trades on 5/21/2025 - remove 2 largest losers
+        may_21_mask = df['Exit time'].dt.strftime('%m/%d/%Y') == '05/21/2025'
+        may_21_trades = df[may_21_mask].copy()
+        if not may_21_trades.empty:
+            losing_trades_21 = may_21_trades[may_21_trades['Profit'] < 0].sort_values('Profit')
+            if len(losing_trades_21) >= 2:
+                indices_to_remove.extend(losing_trades_21.index[:2].tolist())
+                print(f"Removing 2 largest losing trades on 5/21/2025: {losing_trades_21['Profit'].iloc[:2].tolist()}")
+            elif len(losing_trades_21) == 1:
+                indices_to_remove.append(losing_trades_21.index[0])
+                print(f"Removing 1 losing trade on 5/21/2025: {losing_trades_21['Profit'].iloc[0]}")
+
+        # Filter trades on 5/22/2025 - remove 2 largest winners
+        may_22_mask = df['Exit time'].dt.strftime('%m/%d/%Y') == '05/22/2025'
+        may_22_trades = df[may_22_mask].copy()
+        if not may_22_trades.empty:
+            winning_trades_22 = may_22_trades[may_22_trades['Profit'] > 0].sort_values('Profit', ascending=False)
+            if len(winning_trades_22) >= 2:
+                indices_to_remove.extend(winning_trades_22.index[:2].tolist())
+                print(f"Removing 2 largest winning trades on 5/22/2025: {winning_trades_22['Profit'].iloc[:2].tolist()}")
+            elif len(winning_trades_22) == 1:
+                indices_to_remove.append(winning_trades_22.index[0])
+                print(f"Removing 1 winning trade on 5/22/2025: {winning_trades_22['Profit'].iloc[0]}")
+
+        # Filter trades on 5/23/2025 - remove largest winner and largest loser
+        may_23_mask = df['Exit time'].dt.strftime('%m/%d/%Y') == '05/23/2025'
+        may_23_trades = df[may_23_mask].copy()
+        if not may_23_trades.empty:
+            # Remove largest winner
+            winning_trades_23 = may_23_trades[may_23_trades['Profit'] > 0].sort_values('Profit', ascending=False)
+            if not winning_trades_23.empty:
+                indices_to_remove.append(winning_trades_23.index[0])
+                print(f"Removing largest winning trade on 5/23/2025: {winning_trades_23['Profit'].iloc[0]}")
+
+            # Remove largest loser
+            losing_trades_23 = may_23_trades[may_23_trades['Profit'] < 0].sort_values('Profit')
+            if not losing_trades_23.empty:
+                indices_to_remove.append(losing_trades_23.index[0])
+                print(f"Removing largest losing trade on 5/23/2025: {losing_trades_23['Profit'].iloc[0]}")
+
         # Remove the identified trades
         if indices_to_remove:
             df = df.drop(indices_to_remove)

@@ -1,6 +1,10 @@
-#\!/usr/bin/env python3
+#!/usr/bin/env python3
 """
-Convert NinjaTrader CSV to perf.json
+NinjaTrader CSV to Performance JSON Converter
+
+Converts trading data from NinjaTrader CSV format to a structured JSON format
+suitable for visualization. Handles both actual trading data and temporary
+placeholder data used to fill gaps in the timeline.
 
 Usage: python nt2json.py nt_export.csv data/perf.json
 

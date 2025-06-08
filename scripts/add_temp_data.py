@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """
-Data Gap Resolver - Add Temporary Data to NinjaTrader CSV
+Test Data Generator - Historical Data Extension Tool
 
-This script fills in missing dates with temporary placeholder data
-for continuous visualization. The temporary data maintains the overall
-trading pattern while providing a smoother equity curve through periods
-where actual data may be delayed or missing.
+This script generates synthetic test data to fill date gaps in the trading history.
+It creates realistic trading patterns based on statistical analysis of existing data
+and maintains continuity in the performance visualization.
 
-For demonstration purposes only - not for production use.
+This approach allows for comprehensive testing of the visualization dashboard
+with a complete dataset covering all relevant time periods.
+
+For development and testing purposes only - not for production use.
 """
 import csv
 import random

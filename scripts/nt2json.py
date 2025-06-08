@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 """
-Convert NinjaTrader CSV to perf.json
+Trading Data Processor - CSV to JSON Converter
 
-Usage: python nt2json.py nt_export.csv data/perf.json
+This script processes trading data from NinjaTrader CSV format and converts it
+to a structured JSON format for visualization in the performance dashboard.
+It calculates key metrics like equity curve, Sharpe ratio, drawdown, and win rate.
+
+Usage: python nt2json.py trading_data.csv output/perf.json
 
 CSV Schema:
 | Column name        | Example value                | Notes                         |
 |--------------------|------------------------------|-------------------------------|
 | Entry time         | 2025‑04‑29 09:35:17          | local timestamp, mm‑dd hh:mm |
-| Exit time          | 2025‑04‑29 10:02:43          |                                |
+| Exit time          | 2025‑04‑29 10:02:43          |                               |
 | Instrument         | MNQ 06‑25                    | string                        |
 | Market pos.        | Long / Short                 | string                        |
 | Qty                | 2                            | integer                       |

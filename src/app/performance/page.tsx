@@ -51,49 +51,10 @@ export default function PerformancePage() {
         console.log('Last 5 values:', json.equity_curve.values.slice(-5));
         console.log('Recent trades:', json.trades.slice(-5));
 
-        // Ensure that we have the May 24-31 data
+        // Log the data range
+        const firstDate = json.equity_curve.dates[0];
         const lastDate = json.equity_curve.dates[json.equity_curve.dates.length - 1];
-        const lastValue = json.equity_curve.values[json.equity_curve.values.length - 1];
-
-        // If the last date is not from May 30, add the missing data
-        if (!lastDate.includes("2025-05-30")) {
-          console.log('Adding missing May 24-31 data');
-
-          // Hard-code the May 24-31 data points if they're missing
-          const mayData = [
-            { date: '2025-05-24 09:45:26', value: 10076.5 },
-            { date: '2025-05-24 11:03:27', value: 10072.0 },
-            { date: '2025-05-27 10:42:57', value: 10065.0 },
-            { date: '2025-05-28 09:23:45', value: 10074.5 },
-            { date: '2025-05-28 12:26:05', value: 10072.0 },
-            { date: '2025-05-29 11:56:59', value: 10073.5 },
-            { date: '2025-05-29 15:34:30', value: 10077.5 },
-            { date: '2025-05-30 13:34:19', value: 10081.5 },
-            { date: '2025-05-30 14:09:33', value: 10082.0 }
-          ];
-
-          for (const point of mayData) {
-            if (!json.equity_curve.dates.includes(point.date)) {
-              json.equity_curve.dates.push(point.date);
-              json.equity_curve.values.push(point.value);
-            }
-          }
-
-          // Sort the data by date
-          const dateValuePairs = json.equity_curve.dates.map((date, i) => ({
-            date,
-            value: json.equity_curve.values[i]
-          }));
-
-          dateValuePairs.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-
-          json.equity_curve.dates = dateValuePairs.map(pair => pair.date);
-          json.equity_curve.values = dateValuePairs.map(pair => pair.value);
-
-          console.log('After adding missing data:');
-          console.log('Last 5 dates:', json.equity_curve.dates.slice(-5));
-          console.log('Last 5 values:', json.equity_curve.values.slice(-5));
-        }
+        console.log(`Data range: ${firstDate} to ${lastDate}`);
 
         setData(json);
         const calculatedMetrics = calculateAllMetrics(json);
@@ -423,7 +384,7 @@ export default function PerformancePage() {
               // Create a projected line from last data point to current date (including weekends)
               x: [
                 data.equity_curve.dates[data.equity_curve.dates.length - 1],
-                '2025-06-01 16:00' // Use June 1st as the "current" date
+                '2025-06-07 16:00' // Use June 7th as the "current" date
               ],
               y: [
                 data.equity_curve.values[data.equity_curve.values.length - 1],
@@ -750,7 +711,7 @@ export default function PerformancePage() {
           My current system, a mean reversion algorithm for micro e-mini futures, has been trading live since April 2025. I have devoted over two years to rigorous research, development, and backtesting before deploying the strategy to live markets.
         </p>
         <div className="mt-4 pt-4 border-t border-blue-700 flex justify-between items-center">
-          <span className="text-blue-200 text-sm">Last updated: May 31, 2025 <small>(contains temporary data)</small></span>
+          <span className="text-blue-200 text-sm">Last updated: June 6, 2025 <small>(contains temporary data)</small></span>
           <a href="/projects" className="text-blue-200 hover:text-white transition-colors inline-flex items-center group">
             View System Architecture
             <span className="ml-1 transition-transform duration-200 group-hover:translate-x-1">→</span>

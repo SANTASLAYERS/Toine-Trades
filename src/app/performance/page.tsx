@@ -381,12 +381,14 @@ export default function PerformancePage() {
               name: 'Equity Curve',
             },
             {
-              // Create a projected line from last data point to current date (including weekends)
+              // Create a projected line from last data point to June 21-22 (weekend)
               x: [
                 data.equity_curve.dates[data.equity_curve.dates.length - 1],
-                '2025-06-07 16:00' // Use June 7th as the "current" date
+                '2025-06-21 12:00', // Saturday
+                '2025-06-22 12:00'  // Sunday
               ],
               y: [
+                data.equity_curve.values[data.equity_curve.values.length - 1],
                 data.equity_curve.values[data.equity_curve.values.length - 1],
                 data.equity_curve.values[data.equity_curve.values.length - 1]
               ],
@@ -711,7 +713,7 @@ export default function PerformancePage() {
           My current system, a mean reversion algorithm for micro e-mini futures, has been trading live since April 2025. I have devoted over two years to rigorous research, development, and backtesting before deploying the strategy to live markets.
         </p>
         <div className="mt-4 pt-4 border-t border-blue-700 flex justify-between items-center">
-          <span className="text-blue-200 text-sm">Last updated: June 6, 2025 <small>(contains temporary data)</small></span>
+          <span className="text-blue-200 text-sm">Last updated: June 20, 2025 <small>(contains temporary data)</small></span>
           <a href="/projects" className="text-blue-200 hover:text-white transition-colors inline-flex items-center group">
             View System Architecture
             <span className="ml-1 transition-transform duration-200 group-hover:translate-x-1">→</span>

@@ -379,26 +379,6 @@ export default function PerformancePage() {
                 shape: 'spline'
               },
               name: 'Equity Curve',
-            },
-            {
-              // Create a projected line from last data point to June 21-22 (weekend)
-              x: [
-                data.equity_curve.dates[data.equity_curve.dates.length - 1],
-                '2025-06-21 12:00', // Saturday
-                '2025-06-22 12:00'  // Sunday
-              ],
-              y: [
-                data.equity_curve.values[data.equity_curve.values.length - 1],
-                data.equity_curve.values[data.equity_curve.values.length - 1],
-                data.equity_curve.values[data.equity_curve.values.length - 1]
-              ],
-              type: 'scatter',
-              mode: 'lines',
-              line: {
-                width: 2,
-                color: '#ef4444' // red color, solid line
-              },
-              name: 'Delayed Data',
             }
           ]}
           layout={{
